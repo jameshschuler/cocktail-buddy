@@ -2,9 +2,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Webpack / TypeScript Template</title>
+    <title>Cocktail Buddy</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+      integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
+    <div id="container">
+      <header id="header">
+        <h1>Cocktail Buddy</h1>
+      </header>
+      <main id="content">
+        <form class="pure-form" id="search-form" name="searchForm">
+          <div class="form-group">
+            <select id="spirit-selector" name="spiritSelector"></select>
+          </div>
+          <button
+            class="pure-button pure-button-primary"
+            id="search-button"
+            type="submit"
+          >
+            Search
+          </button>
+        </form>
+      </main>
+      <footer id="footer">
+        <span>Created by James Schuler</span>
+      </footer>
+    </div>
+
     <script src="bundle.js"></script>
   </body>
 </html>
