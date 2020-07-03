@@ -1,7 +1,7 @@
 {
-  "name": "webpack-typescript-template",
+  "name": "cocktail-buddy",
   "version": "1.0.0",
-  "description": "Simple template for setting up a Webpack / TypeScript project",
+  "description": "Simple web app for learning about different cocktails and recipes.",
   "main": "app.js",
   "scripts": {
     "build": "webpack",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jameshschuler/webpack-typescript-template.git"
+    "url": "git+https://github.com/jameshschuler/cocktail-buddy.git"
   },
   "author": "James Schuler",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jameshschuler/webpack-typescript-template/issues"
+    "url": "https://github.com/jameshschuler/cocktail-buddy/issues"
   },
-  "homepage": "https://github.com/jameshschuler/webpack-typescript-template#readme",
+  "homepage": "https://github.com/jameshschuler/cocktail-buddy#readme",
   "devDependencies": {
     "css-loader": "^3.6.0",
     "sass": "^1.26.9",
