@@ -32,6 +32,25 @@
             Search
           </button>
         </form>
+
+        <div class="hidden" id="loader">
+          <img
+            src="https://img.icons8.com/dotty/80/000000/cocktail-shaker.png"
+          />
+        </div>
+        <div class="pure-form" id="results-header">
+          <h2 id="results-title"></h2>
+          <div class="hidden" id="filter-container">
+            <label for="">Filter by:</label>
+            <input
+              id="filter-input"
+              type="text"
+              placeholder="Name..."
+              name="filter"
+            />
+          </div>
+        </div>
+        <div id="search-results-container"></div>
       </main>
       <footer id="footer">
         <span>Created by James Schuler</span>
