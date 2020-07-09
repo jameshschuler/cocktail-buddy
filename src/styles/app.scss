@@ -55,38 +55,17 @@ body {
     }
 
     #loader {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
       margin-top: 10rem;
+      justify-content: center;
       text-align: center;
 
-      // animation-name: spin;
-      // animation-duration: 1000ms;
-      // animation-iteration-count: infinite;
-      // animation-timing-function: linear;
-
-      // @-moz-keyframes spin {
-      //   from {
-      //     -moz-transform: rotate(0deg);
-      //   }
-      //   to {
-      //     -moz-transform: rotate(45deg);
-      //   }
-      // }
-      // @-webkit-keyframes spin {
-      //   from {
-      //     -webkit-transform: rotate(0deg);
-      //   }
-      //   to {
-      //     -webkit-transform: rotate(45deg);
-      //   }
-      // }
-      // @keyframes spin {
-      //   from {
-      //     transform: rotate(0deg);
-      //   }
-      //   to {
-      //     transform: rotate(45deg);
-      //   }
-      // }
+      h3 {
+        font-size: 2.25rem;
+        margin-top: 0.5rem;
+      }
     }
 
     .pure-form#results-header {

@@ -17,9 +17,16 @@ const spirits = [
     { name: 'Vodka' } ] as Array<Spirit>;
 
 const searchForm = document.getElementById( 'search-form' ) as HTMLFormElement;
+const resetButton = document.getElementById( 'reset-button' ) as HTMLButtonElement;
+const filterInput = document.getElementById( 'filter-input' ) as HTMLInputElement;
+
 const searchResultsContainer = document.getElementById( 'search-results-container' );
 const resultsTitle = document.getElementById( 'results-title' );
 const filterContainer = document.getElementById( 'filter-container' );
+const loader = document.getElementById( 'loader' );
+
+let allresults = new Array<Cocktail>();
+let filteredResults = new Array<Cocktail>();
 
 const populateSelect = ( id: string, options: Array<Option> ) => {
     const select = document.getElementById( id ) as HTMLSelectElement;
@@ -35,9 +42,9 @@ const populateSelect = ( id: string, options: Array<Option> ) => {
     }
 }
 
-const parseSearchResult = ( response: any ): Cocktail[] => {
+const parseSearchResult = ( response: any ): void => {
     if ( !response || !response.drinks ) {
-        return [];
+        return;
     }
 
     const drinks = response.drinks as APIDrink[];
@@ -49,16 +56,17 @@ const parseSearchResult = ( response: any ): Cocktail[] => {
         } as Cocktail
     } ) as Cocktail[];
 
-    return cocktails;
+    allresults = cocktails;
 }
 
-const populateSearchResults = ( cocktails: Cocktail[] ) => {
+const populateSearchResults = ( cocktails: Cocktail[] | null ) => {
     filterContainer!.classList.add( 'hidden' );
 
     let content = '';
 
-    if ( !cocktails || cocktails.length === 0 ) {
-        content = `<div id="no-results-message">No cocktails found. Try a different liquor!</div>`;
+    if ( cocktails === null ) {
+        resultsTitle!.innerText = '';
+        filterContainer!.classList.add( 'hidden' );
     } else {
         resultsTitle!.innerText = `Results - ${cocktails.length}`;
         cocktails.forEach( ( cocktail: Cocktail ) => {
@@ -76,6 +84,20 @@ const populateSearchResults = ( cocktails: Cocktail[] ) => {
     searchResultsContainer!.innerHTML = content;
 }
 
+filterInput.addEventListener( 'keyup', () => {
+    const filterText = filterInput.value.toLocaleLowerCase();
+    const filtered = allresults.filter( e => e.name.toLocaleLowerCase().includes( filterText ) );
+
+    filteredResults = filtered;
+    populateSearchResults( filteredResults );
+} );
+
+resetButton.addEventListener( 'click', () => {
+    allresults = [];
+    filteredResults = [];
+    populateSearchResults( null );
+} );
+
 searchForm.addEventListener( 'submit', async ( e: any ) => {
     e.preventDefault();
 
@@ -83,17 +105,27 @@ searchForm.addEventListener( 'submit', async ( e: any ) => {
     const selectedSpirit = data.get( 'spiritSelector' );
 
     if ( selectedSpirit ) {
+        loader?.classList.remove( 'hidden' );
         const response = await search( Action.Filter, selectedSpirit.toString() );
-        const cocktails = parseSearchResult( response );
-        populateSearchResults( cocktails );
+        parseSearchResult( response );
+
+        if ( allresults.length === 0 ) {
+            searchResultsContainer!.innerHTML = `<div id="no-results-message">No cocktails found. Try a different liquor!</div>`;
+        } else {
+            populateSearchResults( allresults );
+        }
+
+        loader?.classList.add( 'hidden' );
     }
-} )
+} );
 
 window.onload = () => {
-    populateSelect( 'spirit-selector', spirits.map( ( spirit: Spirit ) => {
+    const selectOptions = spirits.map( ( spirit: Spirit ) => {
         return {
             text: spirit.name,
             value: spirit.name
         }
-    } ) );
+    } );
+
+    populateSelect( 'spirit-selector', selectOptions );
 };
