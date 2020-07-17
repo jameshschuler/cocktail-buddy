@@ -1,4 +1,4 @@
-import { Action, search } from './api';
+import { Action, getCocktailDetail, search } from './api';
 import { APIDrink, Cocktail } from './interfaces/cocktail';
 import { Option } from './interfaces/option';
 import { Spirit } from './interfaces/spirit';
@@ -17,8 +17,12 @@ const spirits = [
     { name: 'Vodka' } ] as Array<Spirit>;
 
 const searchForm = document.getElementById( 'search-form' ) as HTMLFormElement;
-const resetButton = document.getElementById( 'reset-button' ) as HTMLButtonElement;
 const filterInput = document.getElementById( 'filter-input' ) as HTMLInputElement;
+const closePopupButton = document.getElementById( 'close-popup-btn' ) as HTMLButtonElement;
+const resetButton = document.getElementById( 'reset-button' ) as HTMLButtonElement;
+
+const cocktailDetailPopup = document.getElementById( 'cocktail-detail-popup' );
+const header = document.getElementById( 'cocktail-name' );
 
 const searchResultsContainer = document.getElementById( 'search-results-container' );
 const resultsTitle = document.getElementById( 'results-title' );
@@ -27,6 +31,16 @@ const loader = document.getElementById( 'loader' );
 
 let allresults = new Array<Cocktail>();
 let filteredResults = new Array<Cocktail>();
+
+const showPopup = () => {
+    cocktailDetailPopup?.classList.remove( 'hidden' );
+}
+
+const closePopup = () => { cocktailDetailPopup?.classList.add( 'hidden' ); }
+
+const populatePopup = ( cocktail: Cocktail ) => {
+    header!.innerText = cocktail.name;
+}
 
 const populateSelect = ( id: string, options: Array<Option> ) => {
     const select = document.getElementById( id ) as HTMLSelectElement;
@@ -59,31 +73,61 @@ const parseSearchResult = ( response: any ): void => {
     allresults = cocktails;
 }
 
-const populateSearchResults = ( cocktails: Cocktail[] | null ) => {
+const clearSearchResults = () => {
+    allresults = [];
+    filteredResults = [];
+    searchResultsContainer!.innerHTML = '';
+    resultsTitle!.innerText = '';
     filterContainer!.classList.add( 'hidden' );
-
-    let content = '';
-
-    if ( cocktails === null ) {
-        resultsTitle!.innerText = '';
-        filterContainer!.classList.add( 'hidden' );
-    } else {
-        resultsTitle!.innerText = `Results - ${cocktails.length}`;
-        cocktails.forEach( ( cocktail: Cocktail ) => {
-            let cocktailResult = `
-                <div class="result" data-id="${cocktail.id}">
-                    <img class="thumbnail" src="${cocktail.thumbnail}" alt="${cocktail.name}" />
-                    <span class="name">${cocktail.name}</span>
-                </div>`;
-
-            content += cocktailResult;
-        } );
-        filterContainer!.classList.remove( 'hidden' );
-    }
-
-    searchResultsContainer!.innerHTML = content;
 }
 
+const populateSearchResults = ( cocktails: Cocktail[] ) => {
+    searchResultsContainer!.innerHTML = '';
+    resultsTitle!.innerText = `Results - ${cocktails.length}`;
+    cocktails.forEach( ( cocktail: Cocktail ) => {
+        const result = document.createElement( 'div' );
+        result.classList.add( 'result' );
+        result.dataset.id = cocktail.id;
+        result.addEventListener( 'click', () => cocktailClicked( cocktail.id ) );
+
+        let cocktailResult =
+            `<img class="thumbnail" src="${cocktail.thumbnail}" alt="${cocktail.name}" />
+                <span class="name">${cocktail.name}</span>`;
+
+        result.innerHTML = cocktailResult;
+
+        searchResultsContainer!.appendChild( result );
+    } );
+
+    filterContainer!.classList.remove( 'hidden' );
+}
+
+const cocktailClicked = async ( id: string ): Promise<void> => {
+    const response = await getCocktailDetail( Action.Detail, parseInt( id ) );
+    const detail = response.drinks[ 0 ];
+
+    if ( !detail ) {
+        // TODO: show error (maybe a toaster?)
+        return;
+    }
+
+    const { strCategory, idDrink, strDrink, strDrinkThumb } = detail;
+
+    const cocktail = {
+        category: strCategory,
+        id: idDrink,
+        name: strDrink,
+        thumbnail: strDrinkThumb
+    } as Cocktail;
+
+    populatePopup( cocktail );
+    showPopup();
+}
+
+
+/**
+ * Events
+ */
 filterInput.addEventListener( 'keyup', () => {
     const filterText = filterInput.value.toLocaleLowerCase();
     const filtered = allresults.filter( e => e.name.toLocaleLowerCase().includes( filterText ) );
@@ -92,10 +136,10 @@ filterInput.addEventListener( 'keyup', () => {
     populateSearchResults( filteredResults );
 } );
 
+closePopupButton.addEventListener( 'click', () => closePopup() );
+
 resetButton.addEventListener( 'click', () => {
-    allresults = [];
-    filteredResults = [];
-    populateSearchResults( null );
+    clearSearchResults();
 } );
 
 searchForm.addEventListener( 'submit', async ( e: any ) => {
