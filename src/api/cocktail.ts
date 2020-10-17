@@ -2,13 +2,19 @@ export interface Cocktail {
     category: string;
     glass: string;
     id: string;
-    ingredients: string[];
+    ingredients: Ingredient[];
     instructions: string;
     name: string;
     steps: string[];
     tags: string;
     thumbnail?: string;
     video?: string;
+    alcoholic: string;
+}
+
+export interface Ingredient {
+    ingredient: string;
+    measure: string;
 }
 
 export interface APIDrink {
