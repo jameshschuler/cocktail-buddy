@@ -1,0 +1,28 @@
+.cocktail-detail {
+	color: #eee;
+	padding: 0 1.5rem 1rem 1.5rem;
+
+	#back-to-search {
+		font-size: 1.75rem;
+		margin: 0.75rem 0;
+		color: #eee;
+
+		svg {
+			margin-right: 0.75rem;
+		}
+	}
+
+	.title {
+		font-size: 3.5rem;
+	}
+
+	.instructions {
+		font-size: 1.75rem;
+	}
+
+	.ingredients {
+		ul {
+			margin-left: 0.5rem;
+		}
+	}
+}

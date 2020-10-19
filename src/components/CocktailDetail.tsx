@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Action, convertToModel, getCocktailDetail } from '../api/api';
 import { Cocktail, Ingredient } from '../api/cocktail';
 
@@ -21,7 +21,6 @@ const CocktailDetail: React.FC<CocktailDetailProps> = ({ match }) => {
 			setLoading(true);
 			const response = await getCocktailDetail(Action.Detail, cocktailId);
 			const cocktail = convertToModel(response.drinks[0]);
-			console.log(cocktail);
 			setDetail(cocktail);
 			setLoading(false);
 		};
@@ -31,15 +30,19 @@ const CocktailDetail: React.FC<CocktailDetailProps> = ({ match }) => {
 
 	return (
 		<div className="cocktail-detail">
+			<Link id="back-to-search" to="/">
+				<i className="fas fa-arrow-left"></i>
+				Search
+			</Link>
 			{detail ? (
 				<>
-					<h3>{detail.name}</h3>
+					<h3 className="title">{detail.name}</h3>
 					<img
 						className="thumbnail"
 						src={detail.thumbnail}
 						alt={detail.name}
 					/>
-					<p>{detail.instructions}</p>
+					<p className="instructions">{detail.instructions}</p>
 					<div className="ingredients">
 						<h4>Ingredients</h4>
 						<ul>
@@ -59,7 +62,9 @@ const CocktailDetail: React.FC<CocktailDetailProps> = ({ match }) => {
 			) : (
 				<>
 					{loading ? (
-						<div>Loading...</div>
+						<div className="loader">
+							<h2>Loading...</h2>
+						</div>
 					) : (
 						<div className="error alert">
 							Unable to find cocktail recipe. Please try again!
