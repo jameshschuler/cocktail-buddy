@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
 import { Action, search } from '../api/api';
 
 interface SearchProps {
@@ -8,32 +7,35 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = ({ callback }) => {
 	const [spirits, setSpirits] = useState([
-		{ label: 'Vodka', value: 'vodka' },
-		{ label: 'Tequila', value: 'tequila' },
 		{ label: 'Bourbon', value: 'bourbon' },
-		{ label: 'Gin', value: 'gin' },
 		{ label: 'Brandy', value: 'brandy' },
 		{ label: 'Cognac', value: 'cognac' },
+		{ label: 'Gin', value: 'gin' },
 		{ label: 'Mezcal', value: 'mezcal' },
 		{ label: 'Rum', value: 'rum' },
 		{ label: 'Scotch', value: 'scotch' },
+		{ label: 'Tequila', value: 'tequila' },
 		{ label: 'Vermouth', value: 'vermouth' },
+		{ label: 'Vodka', value: 'vodka' },
 	]);
-	const { register, handleSubmit, watch, errors } = useForm();
-	const onSubmit = async (data: any) => {
-		const results = await search(Action.Filter, data.spirit);
-		callback(data.spirit, results);
+
+	useEffect(() => {
+		onChange('bourbon');
+	}, []);
+
+	const onChange = async (spirit: string) => {
+		const results = await search(Action.Filter, spirit);
+		callback(spirit, results);
 	};
 
-	// TODO: Implement loader
 	return (
 		<div id="search">
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form>
 				<fieldset>
 					<select
 						id="spirit-selector"
 						name="spirit"
-						ref={register({ required: true })}
+						onChange={(e: any) => onChange(e.target.value)}
 					>
 						{spirits.map((option, index) => {
 							return (
@@ -43,12 +45,6 @@ const Search: React.FC<SearchProps> = ({ callback }) => {
 							);
 						})}
 					</select>
-					<button
-						className="button-primary button-outline"
-						type="submit"
-					>
-						<i className="fas fa-search fa-fw fa-lg"></i>
-					</button>
 				</fieldset>
 			</form>
 		</div>
