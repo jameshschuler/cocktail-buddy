@@ -20,7 +20,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
 				{results.length === 0 ? (
 					<div id="no-results-message">
 						{searchedSpirit !== ''
-							? `No Results found for ${searchedSpirit}`
+							? `No Results found for '${searchedSpirit}'`
 							: 'Select a spirit and click search to find cocktail recipes.'}
 					</div>
 				) : (

@@ -7,10 +7,29 @@ import SearchResults from './SearchResults';
 
 const Content: React.FC = () => {
 	const [results, setResults] = useState<Cocktail[]>([]);
+	const [filteredResults, setFilteredResults] = useState<Cocktail[]>([]);
 	const [searchedSpirit, setSearchedSpirit] = useState('');
 
+	const filterResultsCallback = (query: string) => {
+		console.log(query);
+		if (results.length === 0) {
+			return;
+		}
+
+		if (query === '') {
+			setFilteredResults(results);
+			return;
+		}
+
+		const filtered = results.filter((result: Cocktail) => {
+			return result.name.toLowerCase().includes(query.toLowerCase());
+		});
+
+		setFilteredResults(filtered);
+		setSearchedSpirit(query);
+	};
+
 	const searchCallback = (searchedSpirit: string, results: APIDetail) => {
-		console.log(results);
 		const cocktails = results.drinks.map((drink: APIDrink) => {
 			return {
 				id: drink.idDrink,
@@ -20,15 +39,19 @@ const Content: React.FC = () => {
 		}) as Cocktail[];
 
 		setResults(cocktails);
+		setFilteredResults(cocktails);
 		setSearchedSpirit(searchedSpirit);
 	};
 
 	return (
 		<div id="content">
 			<Route exact path="/">
-				<Search callback={searchCallback} />
+				<Search
+					callback={searchCallback}
+					filterResultsCallback={filterResultsCallback}
+				/>
 				<SearchResults
-					results={results}
+					results={filteredResults}
 					searchedSpirit={searchedSpirit}
 				/>
 			</Route>

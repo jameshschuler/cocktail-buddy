@@ -2,6 +2,8 @@
 	@import './detail.scss';
 
 	#search {
+		background-color: #eee;
+		box-shadow: 0 0 10px;
 		padding: 2rem 0.75rem;
 		margin: 0 2rem 1rem 2rem;
 		border: 1px solid #eee;
@@ -15,22 +17,30 @@
 		form,
 		fieldset,
 		select {
-			margin-bottom: 0;
+			margin: 0;
 		}
 
 		form {
+			display: flex;
+
 			fieldset {
-				display: flex;
+				margin: 0 0.75rem;
+				width: 50%;
 
 				select {
-					background-color: #eee;
-					border-color: #333;
-					max-width: 25rem;
-
 					&:focus {
 						border-color: #333;
 						background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 8" width="30"><path fill="%333" d="M0,0l6,8l6-8"/></svg>');
 					}
+				}
+			}
+
+			@media screen and (max-width: 35.5em) {
+				flex-direction: column;
+
+				fieldset {
+					margin: 0.5rem 0;
+					width: 100%;
 				}
 			}
 		}

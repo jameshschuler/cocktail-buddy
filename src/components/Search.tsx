@@ -3,9 +3,10 @@ import { Action, search } from '../api/api';
 
 interface SearchProps {
 	callback: (searchedSpirit: string, results: any) => any;
+	filterResultsCallback: (query: string) => any;
 }
 
-const Search: React.FC<SearchProps> = ({ callback }) => {
+const Search: React.FC<SearchProps> = ({ callback, filterResultsCallback }) => {
 	const [spirits, setSpirits] = useState([
 		{ label: 'Bourbon', value: 'bourbon' },
 		{ label: 'Brandy', value: 'brandy' },
@@ -28,6 +29,10 @@ const Search: React.FC<SearchProps> = ({ callback }) => {
 		callback(spirit, results);
 	};
 
+	const filterResults = (query: string) => {
+		filterResultsCallback(query);
+	};
+
 	return (
 		<div id="search">
 			<form>
@@ -45,6 +50,13 @@ const Search: React.FC<SearchProps> = ({ callback }) => {
 							);
 						})}
 					</select>
+				</fieldset>
+				<fieldset>
+					<input
+						placeholder="Filter by..."
+						name="filter"
+						onChange={(e: any) => filterResults(e.target.value)}
+					/>
 				</fieldset>
 			</form>
 		</div>
