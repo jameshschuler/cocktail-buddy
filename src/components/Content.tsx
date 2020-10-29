@@ -59,6 +59,16 @@ const Content: React.FC = () => {
 				path="/detail/:cocktailId"
 				component={CocktailDetail}
 			></Route>
+			<Route>
+				<Search
+					callback={searchCallback}
+					filterResultsCallback={filterResultsCallback}
+				/>
+				<SearchResults
+					results={filteredResults}
+					searchedSpirit={searchedSpirit}
+				/>
+			</Route>
 		</div>
 	);
 };
