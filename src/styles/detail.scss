@@ -1,6 +1,10 @@
 .cocktail-detail {
 	color: #eee;
-	padding: 0 1.5rem 1rem 1.5rem;
+	padding: 0 1.5rem 1rem 3rem;
+
+	@media screen and (max-width: 35.5em) {
+		padding-left: 1.5rem;
+	}
 
 	#back-to-search {
 		font-size: 1.75rem;
@@ -12,15 +16,30 @@
 		}
 	}
 
+	.thumbnail {
+		width: 400px;
+	}
+
+	@media screen and (max-width: 35.5em) {
+		.thumbnail {
+			width: 100%;
+		}
+	}
+
 	.title {
 		font-size: 3.5rem;
+		font-weight: 400;
 	}
 
 	.instructions {
 		font-size: 1.75rem;
+		font-weight: 400;
 	}
 
 	.ingredients {
+		font-size: 1.75rem;
+		font-weight: 400;
+
 		ul {
 			margin-left: 0.5rem;
 		}

@@ -37,6 +37,7 @@ const Search: React.FC<SearchProps> = ({ callback, filterResultsCallback }) => {
 		<div id="search">
 			<form>
 				<fieldset>
+					<label htmlFor="spirit-selector">Spirit</label>
 					<select
 						id="spirit-selector"
 						name="spirit"
@@ -52,8 +53,10 @@ const Search: React.FC<SearchProps> = ({ callback, filterResultsCallback }) => {
 					</select>
 				</fieldset>
 				<fieldset>
+					<label htmlFor="filter-by">Filter by</label>
 					<input
-						placeholder="Filter by..."
+						id="filter-by"
+						placeholder="Cocktail name..."
 						name="filter"
 						onChange={(e: any) => filterResults(e.target.value)}
 					/>

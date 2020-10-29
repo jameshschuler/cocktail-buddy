@@ -3,7 +3,7 @@
 
 	#search {
 		background-color: #eee;
-		box-shadow: 0 0 10px;
+		box-shadow: 5px 5px 10px #333;
 		padding: 2rem 0.75rem;
 		margin: 0 2rem 1rem 2rem;
 		border: 1px solid #eee;
@@ -47,9 +47,11 @@
 	}
 
 	#total-results {
+		font-weight: 500;
 		margin-left: 2.5rem;
 		color: #eee;
 		font-size: 3rem;
+		margin-top: 2rem;
 	}
 
 	#search-results-container {
@@ -57,7 +59,7 @@
 		color: #eee;
 		display: grid;
 		grid-gap: 1.5rem 1rem;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 		padding: 1rem 0.5rem;
 
 		#no-results-message {
@@ -79,19 +81,23 @@
 
 			&:hover {
 				cursor: pointer;
+
+				img {
+					box-shadow: 5px 5px 10px #333;
+				}
 			}
 
 			a {
 				.thumbnail {
 					height: 300px;
-					width: 300px;
+					width: 350px;
 				}
 			}
 
 			.name {
-				font-size: 1.5rem;
+				font-size: 1.75rem;
 				font-weight: 500;
-				margin-top: 0.75rem;
+				margin-top: 0.5rem;
 			}
 		}
 	}

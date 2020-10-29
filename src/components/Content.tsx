@@ -11,7 +11,6 @@ const Content: React.FC = () => {
 	const [searchedSpirit, setSearchedSpirit] = useState('');
 
 	const filterResultsCallback = (query: string) => {
-		console.log(query);
 		if (results.length === 0) {
 			return;
 		}

@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import 'milligram';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';

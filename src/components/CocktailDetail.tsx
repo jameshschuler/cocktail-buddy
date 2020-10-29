@@ -11,8 +11,6 @@ interface CocktailDetailProps
 	extends RouteComponentProps<CocktailDetailParams> {}
 
 const CocktailDetail: React.FC<CocktailDetailProps> = ({ match }) => {
-	console.log('id', match.params.cocktailId);
-
 	const [detail, setDetail] = useState<Cocktail | null>(null);
 	const [loading, setLoading] = useState(false);
 
