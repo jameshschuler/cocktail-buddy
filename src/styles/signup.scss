@@ -1,0 +1,40 @@
+.form-container {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 500px;
+	padding: 2rem;
+	color: #333;
+
+	#sign-up-form {
+		background-color: #eee;
+		padding: 1.5rem;
+		border-radius: 4px;
+
+		fieldset {
+			margin-bottom: 0;
+		}
+
+		button {
+			width: 50px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 0;
+		}
+	}
+
+	.secondary {
+		background-color: #eee;
+		padding: 1.5rem;
+		border-radius: 4px;
+
+		p {
+			margin-bottom: 1rem;
+		}
+
+		a {
+			margin-bottom: 0;
+			width: 100%;
+		}
+	}
+}

@@ -4,6 +4,8 @@ import { APIDetail, APIDrink, Cocktail } from '../api/cocktail';
 import CocktailDetail from './CocktailDetail';
 import Search from './Search';
 import SearchResults from './SearchResults';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
 
 const Content: React.FC = () => {
 	const [results, setResults] = useState<Cocktail[]>([]);
@@ -44,7 +46,7 @@ const Content: React.FC = () => {
 
 	return (
 		<div id="content">
-			<Route exact path="/">
+			<Route exact path="/search">
 				<Search
 					callback={searchCallback}
 					filterResultsCallback={filterResultsCallback}
@@ -54,12 +56,14 @@ const Content: React.FC = () => {
 					searchedSpirit={searchedSpirit}
 				/>
 			</Route>
+			<Route exact path="/signin" component={SignIn} />
+			<Route exact path="/signup" component={SignUp} />
 			<Route
 				exact
 				path="/detail/:cocktailId"
 				component={CocktailDetail}
 			></Route>
-			<Route>
+			{/* <Route>
 				<Search
 					callback={searchCallback}
 					filterResultsCallback={filterResultsCallback}
@@ -68,7 +72,7 @@ const Content: React.FC = () => {
 					results={filteredResults}
 					searchedSpirit={searchedSpirit}
 				/>
-			</Route>
+			</Route> */}
 		</div>
 	);
 };

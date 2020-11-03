@@ -1,0 +1,40 @@
+nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem;
+
+	#header {
+		h1 {
+			color: #eee;
+			font-size: 3.5rem;
+			font-weight: 500;
+		}
+	}
+
+	ul {
+		list-style-type: none;
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+
+		@media screen and (max-width: 35.5em) {
+			display: none;
+		}
+
+		li {
+			margin: 0 1rem;
+
+			a {
+				display: flex;
+				align-items: center;
+				color: #eee;
+				font-size: 1.75rem;
+
+				svg {
+					margin-right: 0.5rem;
+				}
+			}
+		}
+	}
+}

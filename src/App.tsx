@@ -4,7 +4,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Content from './components/Content';
 import Footer from './components/Footer';
-import Header from './components/Header';
+import Navbar from './components/Navbar';
 import './styles/app.scss';
 
 export const app = firebase.initializeApp({
@@ -21,7 +21,7 @@ export const app = firebase.initializeApp({
 function App() {
 	return (
 		<Router>
-			<Header />
+			<Navbar />
 			<Content />
 			<Footer />
 		</Router>

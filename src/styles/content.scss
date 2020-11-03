@@ -1,17 +1,18 @@
 #content {
 	@import './detail.scss';
+	@import './signup.scss';
 
 	#search {
 		background-color: #eee;
 		box-shadow: 5px 5px 10px #333;
 		padding: 2rem 0.75rem;
-		margin: 0 2rem 1rem 2rem;
+		margin: 0 2rem 3rem 2rem;
 		border: 1px solid #eee;
 		border-radius: 4px;
 		max-width: 800px;
 
 		@media screen and (min-width: 35.5em) {
-			margin: 2rem auto;
+			margin: 3rem auto;
 		}
 
 		form,
@@ -48,19 +49,30 @@
 
 	#total-results {
 		font-weight: 500;
-		margin-left: 2.5rem;
 		color: #eee;
 		font-size: 3rem;
-		margin-top: 2rem;
+		width: 85%;
+		margin: 0 auto;
+
+		@media screen and (max-width: 35.5em) {
+			margin-left: 2rem;
+			width: 100%;
+		}
 	}
 
 	#search-results-container {
 		align-items: center;
 		color: #eee;
 		display: grid;
-		grid-gap: 1.5rem 1rem;
-		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+		grid-gap: 1.5rem 1.5rem;
+		grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
 		padding: 1rem 0.5rem;
+		width: 85%;
+		margin: 0 auto;
+
+		@media screen and (max-width: 35.5em) {
+			width: 95%;
+		}
 
 		#no-results-message {
 			align-items: center;
@@ -75,22 +87,24 @@
 
 		.result {
 			align-items: center;
+			background-color: #eee;
 			display: flex;
+			color: #333;
 			flex-direction: column;
 			justify-content: center;
+			border: 1px solid #333;
+			border-radius: 4px;
+			padding: 2rem 1.5rem 1rem 1.5rem;
 
 			&:hover {
 				cursor: pointer;
-
-				img {
-					box-shadow: 5px 5px 10px #333;
-				}
+				box-shadow: 5px 5px 10px #333;
 			}
 
 			a {
 				.thumbnail {
 					height: 300px;
-					width: 350px;
+					width: 325px;
 				}
 			}
 

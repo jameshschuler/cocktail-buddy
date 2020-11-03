@@ -28,7 +28,7 @@ const CocktailDetail: React.FC<CocktailDetailProps> = ({ match }) => {
 
 	return (
 		<div className="cocktail-detail">
-			<Link id="back-to-search" to="/">
+			<Link id="back-to-search" to="/search">
 				<i className="fas fa-arrow-left"></i>
 				Search
 			</Link>
