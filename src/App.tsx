@@ -5,9 +5,10 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Content from './components/Content';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
+import UserProvider from './providers/UserProvider';
 import './styles/app.scss';
 
-export const app = firebase.initializeApp({
+firebase.initializeApp({
 	apiKey: 'AIzaSyCpeTDJJcwgRmPstxWv092NPSH2lUBpHYA',
 	authDomain: 'cocktail-buddy-ebdcc.firebaseapp.com',
 	databaseURL: 'https://cocktail-buddy-ebdcc.firebaseio.com',
@@ -18,12 +19,17 @@ export const app = firebase.initializeApp({
 	measurementId: 'G-BK271LJHN6',
 });
 
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
+
 function App() {
 	return (
 		<Router>
-			<Navbar />
-			<Content />
-			<Footer />
+			<UserProvider>
+				<Navbar />
+				<Content />
+				<Footer />
+			</UserProvider>
 		</Router>
 	);
 }
