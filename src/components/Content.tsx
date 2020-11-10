@@ -3,8 +3,9 @@ import { Route } from 'react-router-dom';
 import { APIDetail, APIDrink, Cocktail } from '../api/cocktail';
 import { UserContext } from '../contexts/UserContext';
 import CocktailDetail from './CocktailDetail';
-import Collection from './Collection';
-import ProtectedRoute, { ProtectedRouteProps } from './helpers/ProtectedRoute';
+import AddSpirit from './collection/AddSpirit';
+import Collection from './collection/Collection';
+import ProtectedRoute from './helpers/ProtectedRoute';
 import Profile from './Profile';
 import Search from './Search';
 import SearchResults from './SearchResults';
@@ -49,13 +50,6 @@ const Content: React.FC = () => {
 		setSearchedSpirit(searchedSpirit);
 	};
 
-	const defaultProtectedRouteProps: ProtectedRouteProps = {
-		isAuthenticated: userContext.user !== null,
-		authenticationPath: '/signin',
-		isAllowed: true,
-		restrictedPath: '/search',
-	};
-
 	return (
 		<div id="content">
 			<Route exact path="/search">
@@ -71,13 +65,19 @@ const Content: React.FC = () => {
 			<Route exact path="/signin" component={SignIn} />
 			<Route exact path="/signup" component={SignUp} />
 			<ProtectedRoute
-				{...defaultProtectedRouteProps}
+				isAuthenticated={userContext.user !== null}
 				exact={true}
 				path="/collection"
 				component={Collection}
 			/>
 			<ProtectedRoute
-				{...defaultProtectedRouteProps}
+				isAuthenticated={userContext.user !== null}
+				exact={true}
+				path="/collection/add"
+				component={AddSpirit}
+			/>
+			<ProtectedRoute
+				isAuthenticated={userContext.user !== null}
 				exact={true}
 				path="/profile"
 				component={Profile}

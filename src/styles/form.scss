@@ -1,3 +1,32 @@
+input[type='color']:focus,
+input[type='date']:focus,
+input[type='datetime']:focus,
+input[type='datetime-local']:focus,
+input[type='email']:focus,
+input[type='month']:focus,
+input[type='number']:focus,
+input[type='password']:focus,
+input[type='search']:focus,
+input[type='tel']:focus,
+input[type='text']:focus,
+input[type='url']:focus,
+input[type='week']:focus,
+input:not([type]):focus,
+textarea:focus,
+select:focus {
+	border-color: #333;
+}
+
+input.error {
+	border-color: #ed4337;
+}
+
+.error-message {
+	color: #ed4337;
+	width: 100%;
+	font-weight: 400;
+}
+
 .form-container {
 	margin: 0 auto;
 	width: 100%;
@@ -11,8 +40,7 @@
 		border-color: rgb(86, 176, 211);
 	}
 
-	#sign-in-form,
-	#sign-up-form {
+	.form {
 		background-color: #eee;
 		padding: 1.5rem;
 		border-radius: 4px;

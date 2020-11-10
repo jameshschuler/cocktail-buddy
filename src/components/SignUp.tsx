@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import { ErrorContext } from '../contexts/ErrorContext';
 import { UserContext } from '../contexts/UserContext';
 import { signup } from '../service/accountService';
@@ -9,7 +9,8 @@ const SignUp: React.FC = () => {
 	const { register, handleSubmit, watch, errors } = useForm();
 	const userContext = useContext(UserContext);
 	const errorContext = useContext(ErrorContext);
-	const history = useHistory();
+	const { state }: any = useLocation();
+	const [shouldRedirect, setShouldRedirect] = useState(false);
 
 	const onSubmit = async (data: any) => {
 		const error = await signup(data.email, data.password, data.rememberMe);
@@ -19,20 +20,26 @@ const SignUp: React.FC = () => {
 		} else {
 			if (userContext.user) {
 				errorContext.message = null;
-				history.push('/collection');
+				setShouldRedirect(true);
 			}
 		}
 	};
 
-	useEffect(() => {
-		if (userContext.user !== null) {
-			history.push('/search');
-		}
-	}, [userContext.user]);
+	if (userContext.user !== null) {
+		return <Redirect to={'/collection'} />;
+	}
+
+	if (shouldRedirect) {
+		return <Redirect to={state?.from || '/collection'} />;
+	}
 
 	return (
 		<div className="form-container">
-			<form id="sign-up-form" onSubmit={handleSubmit(onSubmit)}>
+			<form
+				className="form"
+				id="sign-up-form"
+				onSubmit={handleSubmit(onSubmit)}
+			>
 				<h2>Sign up</h2>
 				{errorContext.message && (
 					<div className="error-message">{errorContext.message}</div>
