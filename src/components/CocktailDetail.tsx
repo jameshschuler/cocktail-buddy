@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
-import { Action, convertToModel, getCocktailDetail } from '../api/api';
-import { Cocktail, Ingredient } from '../api/cocktail';
+import { Action, convertToModel, getCocktailDetail } from '../models/api/api';
+import { Cocktail, Ingredient } from '../models/api/cocktail';
 
 interface CocktailDetailParams {
 	cocktailId: string; // parameters will always be a string (even if they are numerical)

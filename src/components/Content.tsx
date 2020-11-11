@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Route } from 'react-router-dom';
-import { APIDetail, APIDrink, Cocktail } from '../api/cocktail';
 import { UserContext } from '../contexts/UserContext';
+import { APIDetail, APIDrink, Cocktail } from '../models/api/cocktail';
 import CocktailDetail from './CocktailDetail';
 import AddSpirit from './collection/AddSpirit';
 import Collection from './collection/Collection';

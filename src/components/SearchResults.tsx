@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Cocktail } from '../api/cocktail';
+import { Cocktail } from '../models/api/cocktail';
 
 interface SearchResultsProps {
 	results: Cocktail[];

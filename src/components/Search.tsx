@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Action, search } from '../api/api';
+import { Action, search } from '../models/api/api';
 
 interface SearchProps {
 	callback: (searchedSpirit: string, results: any) => any;
