@@ -26,7 +26,7 @@ const AddSpirit: React.FC = () => {
 		const error = await addSpirit({ name, type, quantity });
 
 		if (error) {
-			errorContext.message = error;
+			errorContext.message = error.message;
 		} else {
 			// TODO: add context for global message
 			history.push('/collection');
