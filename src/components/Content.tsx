@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Route } from 'react-router-dom';
-import { UserContext } from '../contexts/UserContext';
+import { UserContext } from '../context/AppContext';
 import { APIDetail, APIDrink, Cocktail } from '../models/api/cocktail';
 import CocktailDetail from './CocktailDetail';
 import AddSpirit from './collection/AddSpirit';
@@ -16,7 +16,8 @@ const Content: React.FC = () => {
 	const [results, setResults] = useState<Cocktail[]>([]);
 	const [filteredResults, setFilteredResults] = useState<Cocktail[]>([]);
 	const [searchedSpirit, setSearchedSpirit] = useState('');
-	const userContext = useContext(UserContext);
+
+	const { user } = useContext(UserContext);
 
 	const filterResultsCallback = (query: string) => {
 		if (results.length === 0) {
@@ -51,7 +52,7 @@ const Content: React.FC = () => {
 	};
 
 	return (
-		<div id="content">
+		<>
 			<Route exact path="/search">
 				<Search
 					callback={searchCallback}
@@ -65,29 +66,33 @@ const Content: React.FC = () => {
 			<Route exact path="/signin" component={SignIn} />
 			<Route exact path="/signup" component={SignUp} />
 			<ProtectedRoute
-				isAuthenticated={userContext.user !== null}
+				isAuthenticated={user !== null}
 				exact={true}
 				path="/collection"
-				component={Collection}
-			/>
+			>
+				<Collection />
+			</ProtectedRoute>
 			<ProtectedRoute
-				isAuthenticated={userContext.user !== null}
+				isAuthenticated={user !== null}
 				exact={true}
 				path="/collection/add"
-				component={AddSpirit}
-			/>
+			>
+				<AddSpirit />
+			</ProtectedRoute>
+
 			<ProtectedRoute
-				isAuthenticated={userContext.user !== null}
+				isAuthenticated={user !== null}
 				exact={true}
 				path="/profile"
-				component={Profile}
-			/>
+			>
+				<Profile />
+			</ProtectedRoute>
 			<Route
 				exact
 				path="/detail/:cocktailId"
 				component={CocktailDetail}
 			></Route>
-		</div>
+		</>
 	);
 };
 

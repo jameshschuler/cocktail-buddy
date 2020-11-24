@@ -1,33 +1,32 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, Redirect, useLocation } from 'react-router-dom';
-import { ErrorContext } from '../contexts/ErrorContext';
-import { UserContext } from '../contexts/UserContext';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import { signin } from '../service/accountService';
 
 const SignIn: React.FC = () => {
 	const { register, handleSubmit, watch, errors } = useForm();
-	const userContext = useContext(UserContext);
-	const errorContext = useContext(ErrorContext);
 	const { state }: any = useLocation();
 	const [shouldRedirect, setShouldRedirect] = useState(false);
+	const history = useHistory();
 
 	const onSubmit = async (data: any) => {
 		const error = await signin(data.email, data.password, data.rememberMe);
 
 		if (error) {
-			errorContext.message = error;
+			//errorContext.message = error;
 		} else {
-			if (userContext.user) {
-				errorContext.message = null;
-				setShouldRedirect(true);
-			}
+			// console.log('here', userContext);
+			// if (userContext.user) {
+			// 	errorContext.message = null;
+			// 	setShouldRedirect(true);
+			// 	history.push('/collection');
+			// }
 		}
 	};
 
-	if (userContext.user !== null) {
-		return <Redirect to={'/collection'} />;
-	}
+	// if (userContext.user !== null) {
+	// 	return <Redirect to={'/collection'} />;
+	// }
 
 	if (shouldRedirect) {
 		return <Redirect to={state?.from || '/collection'} />;
@@ -41,9 +40,9 @@ const SignIn: React.FC = () => {
 				onSubmit={handleSubmit(onSubmit)}
 			>
 				<h2>Sign in</h2>
-				{errorContext.message && (
+				{/* {errorContext.message && (
 					<div className="error-message">{errorContext.message}</div>
-				)}
+				)} */}
 				<fieldset>
 					<label htmlFor="email">Email</label>
 					<input

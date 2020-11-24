@@ -1,10 +1,17 @@
-import { auth, firestore } from 'firebase';
+import { auth, firestore } from '../App';
 import { CustomError } from '../models/error';
 import { Spirit } from '../models/spirit';
 
 export async function addSpirit ( spirit: Spirit ): Promise<CustomError | null> {
-    const db = firestore();
-    const userId = auth().currentUser?.uid;
+    if ( spirit.description && spirit.description.length > 500 ) {
+        return {
+            code: 'VALIDATION_ERROR',
+            message: 'Description cannot be longer than 500 characters.',
+        }
+    }
+
+    const db = firestore;
+    const userId = auth.currentUser?.uid;
 
     if ( !userId ) {
         return {
@@ -27,8 +34,8 @@ export async function addSpirit ( spirit: Spirit ): Promise<CustomError | null> 
 }
 
 export async function loadCollection (): Promise<Spirit[]> {
-    const db = firestore();
-    const userId = auth().currentUser?.uid;
+    const db = firestore;
+    const userId = auth.currentUser?.uid;
 
     if ( !userId ) {
         return [];

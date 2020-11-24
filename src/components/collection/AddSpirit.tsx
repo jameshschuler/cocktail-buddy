@@ -1,45 +1,55 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { ErrorContext } from '../../contexts/ErrorContext';
+import { UserContext } from '../../context/AppContext';
+import { spiritOptions, tastingNotes } from '../../models/data/data';
 import { addSpirit } from '../../service/collectionService';
+import TastingNote from './TastingNote';
 
 const AddSpirit: React.FC = () => {
 	const { register, handleSubmit, watch, errors } = useForm();
-	const errorContext = useContext(ErrorContext);
 	const history = useHistory();
+	const { error, setError } = useContext(UserContext);
+	const [spirits, setSpirits] = useState(spiritOptions);
+	const [selectedTastingNotes, setSelectedTastingNotes] = useState<
+		Array<string>
+	>([]);
 
-	const [spirits, setSpirits] = useState([
-		{ label: 'Bourbon', value: 'bourbon' },
-		{ label: 'Brandy', value: 'brandy' },
-		{ label: 'Cognac', value: 'cognac' },
-		{ label: 'Gin', value: 'gin' },
-		{ label: 'Mezcal', value: 'mezcal' },
-		{ label: 'Rum', value: 'rum' },
-		{ label: 'Scotch', value: 'scotch' },
-		{ label: 'Tequila', value: 'tequila' },
-		{ label: 'Vermouth', value: 'vermouth' },
-		{ label: 'Vodka', value: 'vodka' },
-	]);
+	const onSubmit = handleSubmit(
+		async ({ brand, name, type, quantity, description }) => {
+			const error = await addSpirit({
+				brand,
+				name,
+				type,
+				quantity,
+				description,
+				tastingNotes: selectedTastingNotes,
+			});
 
-	const onSubmit = handleSubmit(async ({ name, type, quantity }) => {
-		const error = await addSpirit({ name, type, quantity });
-
-		if (error) {
-			errorContext.message = error.message;
-		} else {
-			// TODO: add context for global message
-			history.push('/collection');
+			if (error) {
+				setError(error.message);
+			} else {
+				// TODO: add context for global message
+				history.push('/collection');
+			}
 		}
-	});
+	);
+
+	const toggle = (note: string) => {
+		if (selectedTastingNotes.includes(note)) {
+			setSelectedTastingNotes(
+				selectedTastingNotes.filter((n) => n === note)
+			);
+		} else {
+			setSelectedTastingNotes([...selectedTastingNotes, note]);
+		}
+	};
 
 	return (
 		<div className="form-container">
 			<form className="form" onSubmit={onSubmit}>
 				<h2>Add Spirit</h2>
-				{errorContext.message && (
-					<div className="error-message">{errorContext.message}</div>
-				)}
+				{error && <div className="error-message">{error}</div>}
 				<fieldset>
 					<label htmlFor="name">Type *</label>
 					<select
@@ -57,6 +67,15 @@ const AddSpirit: React.FC = () => {
 							);
 						})}
 					</select>
+					<label htmlFor="name">Brand *</label>
+					<input
+						id="brand"
+						type="text"
+						placeholder=""
+						name="brand"
+						ref={register({ required: true })}
+						className={errors.brand ? 'error' : ''}
+					/>
 					<label htmlFor="name">Name *</label>
 					<input
 						id="name"
@@ -82,6 +101,25 @@ const AddSpirit: React.FC = () => {
 							);
 						})}
 					</select>
+					<label htmlFor="description">Description</label>
+					<textarea
+						id="description"
+						name="description"
+						ref={register()}
+					></textarea>
+					<label>Tasting Notes</label>
+					<div className="tasting-notes">
+						{tastingNotes.map((note: string, index: number) => {
+							return (
+								<TastingNote
+									toggle={toggle}
+									key={index}
+									note={note}
+								/>
+							);
+						})}
+					</div>
+
 					<button
 						className="float-right button-primary"
 						type="submit"

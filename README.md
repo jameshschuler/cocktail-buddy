@@ -4,11 +4,6 @@ Simple web app for learning about different cocktails and recipes.
 
 ### TODO
 
--   [x] Move search to /search route
--   [x] Navbar
--   [x] Sign up page route
--   [x] Login page / route
--   [x] Private route component
 -   [ ] Add spirit form
 -   [ ] View collection page
 -   [ ] Redesign detail page to use card style

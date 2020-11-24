@@ -1,0 +1,104 @@
+.card {
+	height: 300px;
+	min-width: 250px;
+	padding: 1.5rem;
+	border-radius: 16px;
+	background: #eee;
+	box-shadow: 0 0 1rem #000;
+	display: flex;
+	border: 2px solid #28242f;
+	flex-direction: column;
+	transition: 0.2s;
+	margin: 0;
+	scroll-snap-align: start;
+	clear: both;
+	position: relative;
+
+	.card-header {
+		margin-bottom: auto;
+
+		p {
+			font-size: 14px;
+			margin: 0 0 1rem;
+			color: #7a7a8c;
+		}
+
+		h2 {
+			font-size: 20px;
+			margin: 0.25rem 0 auto;
+			text-decoration: none;
+			color: #28242f;
+			border: 0;
+			display: inline-block;
+			cursor: pointer;
+
+			&:hover {
+				background: linear-gradient(90deg, #ff8a00, #e52e71);
+				text-shadow: none;
+				-webkit-text-fill-color: transparent;
+				-webkit-background-clip: text;
+				background-clip: text;
+			}
+		}
+	}
+}
+
+.card:focus-within ~ .card,
+.card:hover ~ .card {
+	transform: translateX(130px);
+}
+
+.card:hover {
+	transform: translateY(-1rem);
+}
+
+.card:not(:first-child) {
+	margin-left: -130px;
+}
+
+.no-items-message {
+	margin-left: 1rem;
+}
+
+.card-content {
+	margin: 3rem 0 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+
+	.card-image {
+		img {
+			width: 100px;
+			height: 100px;
+			// filter: grayscale(100%);
+		}
+	}
+
+	.description {
+		grid-area: auto;
+		box-sizing: border-box;
+	}
+
+	.section-title {
+		font-style: normal;
+		font-weight: 700;
+		color: #28242f;
+	}
+}
+
+.tasting-notes-display {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin-top: 1rem;
+
+	.tasting-note-display {
+		background-color: #e0dede;
+		color: #28242f;
+		font-size: 1.25rem;
+		padding: 0.5rem 0.75rem;
+		border-radius: 8px;
+		margin: 0.25rem;
+	}
+}

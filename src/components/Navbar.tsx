@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { auth } from '../App';
-import { UserContext } from '../contexts/UserContext';
+import { UserContext } from '../context/AppContext';
 
 const Navbar: React.FC = () => {
-	const userContext = useContext(UserContext);
+	const { user } = useContext(UserContext);
 
 	return (
 		<nav>
@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
 						<span>Search</span>
 					</NavLink>
 				</li>
-				{userContext.user !== null && (
+				{user !== null && (
 					<>
 						<li>
 							<NavLink to="/collection">
@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
 						</li>
 					</>
 				)}
-				{userContext.user === null && (
+				{user === null && (
 					<>
 						<li>
 							<NavLink to="/signin">

@@ -1,31 +1,29 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, Redirect, useLocation } from 'react-router-dom';
-import { ErrorContext } from '../contexts/ErrorContext';
-import { UserContext } from '../contexts/UserContext';
+import { UserContext } from '../context/AppContext';
 import { signup } from '../service/accountService';
 
 const SignUp: React.FC = () => {
 	const { register, handleSubmit, watch, errors } = useForm();
-	const userContext = useContext(UserContext);
-	const errorContext = useContext(ErrorContext);
 	const { state }: any = useLocation();
 	const [shouldRedirect, setShouldRedirect] = useState(false);
+	const { user, error } = useContext(UserContext);
 
 	const onSubmit = async (data: any) => {
 		const error = await signup(data.email, data.password, data.rememberMe);
 
 		if (error) {
-			errorContext.message = error;
+			// errorContext.message = error;
 		} else {
-			if (userContext.user) {
-				errorContext.message = null;
+			if (user) {
+				// errorContext.message = null;
 				setShouldRedirect(true);
 			}
 		}
 	};
 
-	if (userContext.user !== null) {
+	if (user !== null) {
 		return <Redirect to={'/collection'} />;
 	}
 
@@ -41,9 +39,7 @@ const SignUp: React.FC = () => {
 				onSubmit={handleSubmit(onSubmit)}
 			>
 				<h2>Sign up</h2>
-				{errorContext.message && (
-					<div className="error-message">{errorContext.message}</div>
-				)}
+				{error && <div className="error-message">{error}</div>}
 				<fieldset>
 					<label htmlFor="email">Email</label>
 					<input

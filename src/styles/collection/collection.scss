@@ -1,0 +1,90 @@
+@import './tasting-note.scss';
+
+#my-collection {
+	padding: 0 2rem 2rem 2rem;
+	color: #eee;
+
+	.circle-button {
+		align-items: center;
+		background-color: #eee;
+		border-radius: 50%;
+		bottom: 50px;
+		box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+			0px 6px 10px 0px rgba(0, 0, 0, 0.14),
+			0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+		color: #333;
+		display: flex;
+		height: 50px;
+		justify-content: center;
+		position: fixed;
+		right: 20px;
+		width: 50px;
+	}
+
+	.collection-items {
+		.collection-item {
+			margin: 1rem 0;
+
+			.spirit-type {
+				margin-bottom: 1rem;
+				border-bottom: 2px solid #eee;
+				padding-bottom: 0.5rem;
+			}
+
+			.cards {
+				display: flex;
+				padding: 2rem;
+				overflow-x: scroll;
+
+				@import './card.scss';
+			}
+
+			.cards::-webkit-scrollbar {
+				display: none;
+				width: 10px;
+				height: 10px;
+			}
+
+			.cards::-webkit-scrollbar-thumb {
+				background: #201c29;
+				border-radius: 10px;
+				box-shadow: inset 2px 2px 2px hsla(0, 0%, 100%, 0.25),
+					inset -2px -2px 2px rgba(0, 0, 0, 0.25);
+			}
+
+			.cards::-webkit-scrollbar-track {
+				background: linear-gradient(
+					90deg,
+					#201c29,
+					#201c29 1px,
+					#17141d 0,
+					#17141d
+				);
+			}
+
+			@media (min-width: 40rem) {
+				.cards::-webkit-scrollbar {
+					width: 10px;
+					height: 10px;
+				}
+
+				.cards::-webkit-scrollbar-thumb {
+					background: #201c29;
+					border-radius: 10px;
+					box-shadow: inset 2px 2px 2px hsla(0, 0%, 100%, 0.25),
+						inset -2px -2px 2px rgba(0, 0, 0, 0.25);
+				}
+
+				.cards::-webkit-scrollbar-track {
+					background: linear-gradient(
+						90deg,
+						#201c29,
+						#201c29 1px,
+						#17141d 0,
+						#17141d
+					);
+				}
+			}
+		}
+	}
+}

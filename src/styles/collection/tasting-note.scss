@@ -1,0 +1,16 @@
+.tasting-notes {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+
+	.tasting-note {
+		background-color: #e0dede;
+		padding: 0.5rem 0.75rem;
+		border-radius: 8px;
+		margin: 0.25rem;
+
+		&.selected {
+			background-color: #ccc;
+		}
+	}
+}

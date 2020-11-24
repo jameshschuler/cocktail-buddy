@@ -1,11 +1,12 @@
-import * as firebase from 'firebase/app';
+import firebase from 'firebase';
 import 'milligram';
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Content from './components/Content';
 import Footer from './components/Footer';
+import Loader from './components/helpers/Loader';
 import Navbar from './components/Navbar';
-import UserProvider from './providers/UserProvider';
+import Provider, { UserContext } from './context/AppContext';
 import './styles/app.scss';
 
 firebase.initializeApp({
@@ -23,13 +24,23 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 function App() {
+	const [loading, setLoading] = useState(true);
+	const { user, setUser } = useContext(UserContext);
+
+	useEffect(() => {
+		auth.onAuthStateChanged((userAuth) => {
+			setUser(userAuth);
+			setLoading(false);
+		});
+	}, [user]);
+
 	return (
 		<Router>
-			<UserProvider>
+			<Provider>
 				<Navbar />
-				<Content />
+				<div id="content">{loading ? <Loader /> : <Content />}</div>
 				<Footer />
-			</UserProvider>
+			</Provider>
 		</Router>
 	);
 }

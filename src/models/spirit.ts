@@ -1,5 +1,8 @@
 export interface Spirit {
+    brand: string;
     name: string;
+    description?: string;
+    tastingNotes: string[];
     quantity: string;
     type: string;
     userId?: string;
