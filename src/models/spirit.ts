@@ -6,6 +6,8 @@ export interface Spirit {
     quantity: string;
     type: string;
     userId?: string;
+    img?: any;
+    imageUrl?: string;
 }
 
 export enum SpiritType {

@@ -1,22 +1,44 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../../context/AppContext';
 import { spiritOptions, tastingNotes } from '../../models/data/data';
 import { addSpirit } from '../../service/collectionService';
+import { validateImage } from '../../utils/validateImage';
 import TastingNote from './TastingNote';
 
 const AddSpirit: React.FC = () => {
-	const { register, handleSubmit, watch, errors } = useForm();
+	const {
+		register,
+		handleSubmit,
+		setValue,
+		setError,
+		errors,
+		watch,
+		clearErrors,
+	} = useForm();
 	const history = useHistory();
-	const { error, setError } = useContext(UserContext);
+	const { error, setGlobalError } = useContext(UserContext);
 	const [spirits, setSpirits] = useState(spiritOptions);
 	const [selectedTastingNotes, setSelectedTastingNotes] = useState<
 		Array<string>
 	>([]);
 
+	const imgValue = watch('img');
+
+	useEffect(() => {
+		const isValid = validateImage(imgValue);
+
+		if (!isValid) {
+			setError('img', { message: 'Invalid file.' });
+			setValue('img', null);
+		} else {
+			clearErrors('img');
+		}
+	}, [imgValue]);
+
 	const onSubmit = handleSubmit(
-		async ({ brand, name, type, quantity, description }) => {
+		async ({ brand, name, type, quantity, description, img }) => {
 			const error = await addSpirit({
 				brand,
 				name,
@@ -24,10 +46,11 @@ const AddSpirit: React.FC = () => {
 				quantity,
 				description,
 				tastingNotes: selectedTastingNotes,
+				img,
 			});
 
 			if (error) {
-				setError(error.message);
+				setGlobalError(error.message);
 			} else {
 				// TODO: add context for global message
 				history.push('/collection');
@@ -107,6 +130,30 @@ const AddSpirit: React.FC = () => {
 						name="description"
 						ref={register()}
 					></textarea>
+					<label htmlFor="img">Image</label>
+					<input
+						type="file"
+						name="img"
+						id="img"
+						ref={register({
+							validate: (value: any) => {
+								const isValid = validateImage(value);
+
+								if (!isValid) {
+									setValue('img', null);
+								}
+
+								return isValid;
+							},
+						})}
+					/>
+					{errors.img && (
+						<blockquote className="error">
+							<p>
+								<em>Must be a jpeg/jpg, png, or gif format.</em>
+							</p>
+						</blockquote>
+					)}
 					<label>Tasting Notes</label>
 					<div className="tasting-notes">
 						{tastingNotes.map((note: string, index: number) => {

@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import { auth, firestore } from '../App';
 import { CustomError } from '../models/error';
 import { Spirit } from '../models/spirit';
@@ -23,14 +24,42 @@ export async function addSpirit ( spirit: Spirit ): Promise<CustomError | null> 
     spirit.userId = userId;
 
     try {
+        const imageUrl = await uploadImage( spirit.img );
+        if ( imageUrl ) {
+            spirit.imageUrl = imageUrl as string;
+        }
+        delete spirit.img;
+
         await db.collection( 'collections' ).add( spirit );
         return null;
+
     } catch ( error ) {
         return {
             code: error.code,
             message: error.message
         };
     }
+}
+
+function uploadImage ( img: any ) {
+    if ( !img ) return;
+    return new Promise( ( resolve, reject ) => {
+        const storage = firebase.storage();
+        const fileName = img[ '0' ].name;
+        const uploadTask = storage.ref( `/images/${fileName}` ).put( img[ '0' ] );
+
+        uploadTask.on( 'state_changed',
+            ( snapShot ) => { },
+            ( error ) => {
+                reject( {
+                    code: error.name,
+                    message: error.message
+                } )
+            }, async () => {
+                const imageUrl = await storage.ref( 'images' ).child( fileName ).getDownloadURL();
+                resolve( imageUrl );
+            } );
+    } );
 }
 
 export async function loadCollection (): Promise<Spirit[]> {

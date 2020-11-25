@@ -5,7 +5,7 @@ type AppState = {
 	user?: firebase.User;
 	error?: string;
 	setUser: Function;
-	setError: Function;
+	setGlobalError: Function;
 };
 
 export enum Actions {
@@ -16,7 +16,7 @@ export enum Actions {
 const initialState: AppState = {
 	loading: false,
 	setUser: () => {},
-	setError: (message: string) => {},
+	setGlobalError: (message: string) => {},
 };
 
 function reducer(state: AppState, action: any) {
@@ -44,7 +44,7 @@ const Provider: React.FC = ({ children }) => {
 		setUser: (user: firebase.User) => {
 			dispatch({ type: Actions.SET_USER, payload: { user } });
 		},
-		setError: (message: string) => {
+		setGlobalError: (message: string) => {
 			dispatch({ type: Actions.SET_ERROR, payload: { message } });
 		},
 	};

@@ -21,6 +21,12 @@ input.error {
 	border-color: #ed4337 !important;
 }
 
+blockquote.error {
+	border-color: #ed4337;
+	margin-top: 0.5rem;
+	font-weight: 500;
+}
+
 .error-message {
 	color: #ed4337;
 	width: 100%;
