@@ -1,4 +1,5 @@
 export interface Spirit {
+    id?: string;
     brand: string;
     name: string;
     description?: string;

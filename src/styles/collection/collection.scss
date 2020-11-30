@@ -4,6 +4,46 @@
 	padding: 0 2rem 2rem 2rem;
 	color: #eee;
 
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		h2 {
+			margin-bottom: 0;
+		}
+
+		.actions {
+			button {
+				display: flex;
+				align-items: center;
+				border-color: #eee;
+				color: #eee;
+				margin-bottom: 0;
+				font-size: 1.25rem;
+
+				&.hidden {
+					svg {
+						display: none;
+					}
+
+					span {
+						margin-left: 0;
+					}
+				}
+
+				span {
+					margin-left: 1rem;
+				}
+
+				&:hover {
+					background-color: #eee;
+					color: #ed4337;
+				}
+			}
+		}
+	}
+
 	.circle-button {
 		align-items: center;
 		background-color: #eee;

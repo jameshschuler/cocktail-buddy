@@ -41,6 +41,29 @@ export async function addSpirit ( spirit: Spirit ): Promise<CustomError | null> 
     }
 }
 
+export async function deleteSpirit ( id: string ) {
+    const db = firestore;
+    const userId = auth.currentUser?.uid;
+    console.log( userId );
+
+    if ( !userId ) {
+        return {
+            code: 'Unauthorized',
+            message: 'Unauthorized'
+        }
+    }
+
+    try {
+        const query = db.collection( 'collections' ).doc( id );
+        await query.delete();
+    } catch ( error ) {
+        return {
+            code: error.code,
+            message: error.message
+        };
+    }
+}
+
 function uploadImage ( img: any ) {
     if ( !img ) return;
     return new Promise( ( resolve, reject ) => {
@@ -74,9 +97,10 @@ export async function loadCollection (): Promise<Spirit[]> {
         const querySnapshot = await db.collection( 'collections' ).where( 'userId', '==', userId ).get();
         const collection = new Array<Spirit>();
 
-        querySnapshot.forEach( ( doc: any ) => {
+        querySnapshot.forEach( ( doc: firebase.firestore.DocumentData ) => {
             collection.push( {
-                ...doc.data()
+                ...doc.data(),
+                id: doc.id
             } );
         } );
 
