@@ -2,13 +2,13 @@ import React, { useContext, useState } from 'react';
 import { Route } from 'react-router-dom';
 import { UserContext } from '../context/AppContext';
 import { APIDetail, APIDrink, Cocktail } from '../models/api/cocktail';
-import CocktailDetail from './CocktailDetail';
 import AddSpirit from './collection/AddSpirit';
 import Collection from './collection/Collection';
 import ProtectedRoute from './helpers/ProtectedRoute';
 import Profile from './Profile';
-import Search from './Search';
-import SearchResults from './SearchResults';
+import CocktailDetail from './search/CocktailDetail';
+import Search from './search/Search';
+import SearchResults from './search/SearchResults';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 

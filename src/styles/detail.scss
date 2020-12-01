@@ -1,28 +1,37 @@
 .cocktail-detail {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	color: #eee;
 	padding: 0 1.5rem 1rem 3rem;
+
+	@media (min-width: 40rem) {
+		flex-direction: row;
+
+		.left {
+			margin-right: 3rem;
+		}
+	}
 
 	@media screen and (max-width: 35.5em) {
 		padding-left: 1.5rem;
 	}
 
-	#back-to-search {
-		font-size: 1.75rem;
-		margin: 0.75rem 0;
-		color: #eee;
-
-		svg {
-			margin-right: 0.75rem;
-		}
-	}
-
 	.thumbnail {
-		width: 400px;
+		background-color: #eee;
+		padding: 1rem;
+		border-radius: 4px;
+
+		img {
+			width: 400px;
+		}
 	}
 
 	@media screen and (max-width: 35.5em) {
 		.thumbnail {
-			width: 100%;
+			img {
+				width: 100%;
+			}
 		}
 	}
 
@@ -37,8 +46,16 @@
 	}
 
 	.ingredients {
-		font-size: 1.75rem;
+		font-size: 2rem;
 		font-weight: 400;
+		margin-top: 1rem;
+
+		@media (min-width: 40rem) {
+			margin-top: 0;
+			h4 {
+				font-size: 3rem;
+			}
+		}
 
 		ul {
 			margin-left: 0.5rem;

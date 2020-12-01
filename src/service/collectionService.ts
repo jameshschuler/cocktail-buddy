@@ -44,7 +44,6 @@ export async function addSpirit ( spirit: Spirit ): Promise<CustomError | null> 
 export async function deleteSpirit ( id: string ) {
     const db = firestore;
     const userId = auth.currentUser?.uid;
-    console.log( userId );
 
     if ( !userId ) {
         return {

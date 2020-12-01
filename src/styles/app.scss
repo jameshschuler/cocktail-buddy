@@ -39,3 +39,34 @@ body {
 		flex-shrink: 0;
 	}
 }
+
+.breadcrumbs {
+	margin-left: 2rem;
+
+	ul {
+		align-items: center;
+		display: flex;
+		list-style-type: none;
+		font-size: 1.75rem;
+		font-weight: 500;
+
+		li {
+			color: #606c76;
+			margin-bottom: 0;
+
+			&.divider {
+				font-size: 1.25rem;
+				margin: 0 1rem;
+				color: #606c76;
+			}
+
+			a {
+				color: #eee;
+
+				&:hover {
+					color: #606c76;
+				}
+			}
+		}
+	}
+}
