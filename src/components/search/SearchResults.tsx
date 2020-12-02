@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../context/AppContext';
 import { Cocktail } from '../../models/api/cocktail';
 
-interface SearchResultsProps {
-	results: Cocktail[];
-	searchedSpirit: string;
-}
+interface SearchResultsProps {}
 
-const SearchResults: React.FC<SearchResultsProps> = ({
-	results,
-	searchedSpirit,
-}) => {
+const SearchResults: React.FC<SearchResultsProps> = () => {
+	const { filteredResults, searchResults, query } = useContext(UserContext);
+	const [results, setResults] = useState<Cocktail[]>([]);
+
+	useEffect(() => {
+		if (filteredResults.length !== 0 || query !== '') {
+			setResults(filteredResults);
+		} else {
+			setResults(searchResults);
+		}
+	}, [searchResults, filteredResults]);
+
 	return (
 		<>
 			{results.length !== 0 && (
@@ -19,8 +25,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({
 			<div id="search-results-container">
 				{results.length === 0 ? (
 					<div id="no-results-message">
-						{searchedSpirit !== ''
-							? `No Results found for '${searchedSpirit}'`
+						{query !== ''
+							? `No Results found for '${query}'`
 							: 'Select a spirit and click search to find cocktail recipes.'}
 					</div>
 				) : (

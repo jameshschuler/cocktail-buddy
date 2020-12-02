@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Action, search } from '../../models/api/api';
+import React, { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../../context/AppContext';
+import { Action, search } from '../../service/searchService';
 
-interface SearchProps {
-	callback: (searchedSpirit: string, results: any) => any;
-	filterResultsCallback: (query: string) => any;
-}
+interface SearchProps {}
 
-const Search: React.FC<SearchProps> = ({ callback, filterResultsCallback }) => {
+const Search: React.FC<SearchProps> = () => {
+	const { setSearchResults, filterResults } = useContext(UserContext);
 	const [spirits, setSpirits] = useState([
 		{ label: 'Bourbon', value: 'bourbon' },
 		{ label: 'Brandy', value: 'brandy' },
@@ -26,11 +25,7 @@ const Search: React.FC<SearchProps> = ({ callback, filterResultsCallback }) => {
 
 	const onChange = async (spirit: string) => {
 		const results = await search(Action.Filter, spirit);
-		callback(spirit, results);
-	};
-
-	const filterResults = (query: string) => {
-		filterResultsCallback(query);
+		setSearchResults(results);
 	};
 
 	return (

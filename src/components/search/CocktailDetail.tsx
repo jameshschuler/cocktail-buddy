@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
+import { Cocktail, Ingredient } from '../../models/api/cocktail';
 import {
 	Action,
 	convertToModel,
 	getCocktailDetail,
-} from '../../models/api/api';
-import { Cocktail, Ingredient } from '../../models/api/cocktail';
+} from '../../service/searchService';
 import Loader from '../helpers/Loader';
 
 interface CocktailDetailParams {

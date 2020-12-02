@@ -1,4 +1,4 @@
-import { APIDetail, APIDrink, Cocktail, Ingredient } from './cocktail';
+import { APIDetail, APIDrink, Cocktail, Ingredient } from '../models/api/cocktail';
 
 export enum Action {
     Filter = 'filter',
@@ -19,7 +19,19 @@ export async function search ( action: Action, spirit: string ) {
     let response = await fetch( `${baseUrl}${action}.php?i=${spirit}` );
     let data = await response.json();
 
-    return data;
+    if ( data ) {
+        const cocktails = data.drinks.map( ( drink: APIDrink ) => {
+            return {
+                id: drink.idDrink,
+                name: drink.strDrink,
+                thumbnail: drink.strDrinkThumb,
+            } as Cocktail;
+        } ) as Cocktail[];
+
+        return cocktails;
+    }
+
+    return [];
 }
 
 export async function getCocktailDetail ( action: Action, id: number ): Promise<APIDetail> {

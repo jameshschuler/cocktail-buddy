@@ -1,40 +1,75 @@
 import React, { createContext, useReducer } from 'react';
+import { Cocktail } from '../models/api/cocktail';
+
+export enum MessageType {
+	error,
+	success,
+}
+
+export type Message = {
+	text: string;
+	messageType: MessageType;
+};
 
 type AppState = {
-	loading: boolean;
-	shouldReloadCollection: boolean;
-	user?: firebase.User;
 	error?: string;
+	filteredResults: Cocktail[];
+	loading: boolean;
+	message?: Message;
+	searchResults: Cocktail[];
+	shouldReloadCollection: boolean;
+	query: string;
+	user?: firebase.User;
+	filterResults: Function;
 	setUser: Function;
-	setGlobalError: Function;
+	setGlobalMessage: Function;
+	setSearchResults: Function;
 	setShouldReloadCollection: Function;
 };
 
 export enum Actions {
+	FILTER_RESULTS = 'FILTER_RESULTS',
+	SET_MESSAGE = 'SET_MESSAGE',
 	SET_USER = 'SET_USER',
-	SET_ERROR = 'SET_ERROR',
+	SET_SEARCH_RESULTS = 'SET_SEARCH_RESULTS',
 	SET_SHOULD_RELOAD_COLLECTION = 'SET_SHOULD_RELOAD_COLLECTION',
 }
 
 const initialState: AppState = {
+	filteredResults: [],
 	loading: false,
 	shouldReloadCollection: false,
+	searchResults: [],
+	query: '',
+	filterResults: (query: string) => {},
 	setUser: () => {},
-	setGlobalError: (message: string) => {},
+	setGlobalMessage: (message: string, messageType: MessageType) => {},
+	setSearchResults: (searchResults: Cocktail[]) => {},
 	setShouldReloadCollection: (shouldReloadCollection: boolean) => {},
 };
 
 function reducer(state: AppState, action: any) {
 	switch (action.type) {
+		case Actions.FILTER_RESULTS:
+			return {
+				...state,
+				query: action.payload.query,
+				filteredResults: action.payload.filteredResults,
+			};
 		case Actions.SET_USER:
 			return {
 				...state,
 				user: action.payload.user,
 			};
-		case Actions.SET_ERROR:
+		case Actions.SET_MESSAGE:
 			return {
 				...state,
-				error: action.payload.message,
+				message: action.payload.message,
+			};
+		case Actions.SET_SEARCH_RESULTS:
+			return {
+				...state,
+				searchResults: action.payload.searchResults,
 			};
 		case Actions.SET_SHOULD_RELOAD_COLLECTION:
 			return {
@@ -50,8 +85,39 @@ const Provider: React.FC = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	const value = {
+		filteredResults: state.filteredResults,
 		loading: state.loading,
 		shouldReloadCollection: state.shouldReloadCollection,
+		searchResults: state.searchResults,
+		query: state.query,
+		filterResults: (query: string) => {
+			let filteredResults = [];
+			if (state.searchResults.length !== 0 && query !== '') {
+				filteredResults = state.searchResults.filter(
+					(result: Cocktail) => {
+						return result.name
+							.toLowerCase()
+							.includes(query.toLowerCase());
+					}
+				);
+			} else {
+				query = '';
+			}
+
+			dispatch({
+				type: Actions.FILTER_RESULTS,
+				payload: {
+					filteredResults,
+					query,
+				},
+			});
+		},
+		setSearchResults: (searchResults: Cocktail[]) => {
+			dispatch({
+				type: Actions.SET_SEARCH_RESULTS,
+				payload: { searchResults },
+			});
+		},
 		setShouldReloadCollection: (shouldReloadCollection: boolean) => {
 			dispatch({
 				type: Actions.SET_SHOULD_RELOAD_COLLECTION,
@@ -61,8 +127,11 @@ const Provider: React.FC = ({ children }) => {
 		setUser: (user: firebase.User) => {
 			dispatch({ type: Actions.SET_USER, payload: { user } });
 		},
-		setGlobalError: (message: string) => {
-			dispatch({ type: Actions.SET_ERROR, payload: { message } });
+		setGlobalMessage: (text: string, messageType: MessageType) => {
+			dispatch({
+				type: Actions.SET_MESSAGE,
+				payload: { message: { text, messageType } },
+			});
 		},
 	};
 

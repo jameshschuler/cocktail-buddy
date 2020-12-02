@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Route } from 'react-router-dom';
 import { UserContext } from '../context/AppContext';
-import { APIDetail, APIDrink, Cocktail } from '../models/api/cocktail';
 import AddSpirit from './collection/AddSpirit';
 import Collection from './collection/Collection';
 import ProtectedRoute from './helpers/ProtectedRoute';
@@ -13,55 +12,13 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 
 const Content: React.FC = () => {
-	const [results, setResults] = useState<Cocktail[]>([]);
-	const [filteredResults, setFilteredResults] = useState<Cocktail[]>([]);
-	const [searchedSpirit, setSearchedSpirit] = useState('');
-
 	const { user } = useContext(UserContext);
-
-	const filterResultsCallback = (query: string) => {
-		if (results.length === 0) {
-			return;
-		}
-
-		if (query === '') {
-			setFilteredResults(results);
-			return;
-		}
-
-		const filtered = results.filter((result: Cocktail) => {
-			return result.name.toLowerCase().includes(query.toLowerCase());
-		});
-
-		setFilteredResults(filtered);
-		setSearchedSpirit(query);
-	};
-
-	const searchCallback = (searchedSpirit: string, results: APIDetail) => {
-		const cocktails = results.drinks.map((drink: APIDrink) => {
-			return {
-				id: drink.idDrink,
-				name: drink.strDrink,
-				thumbnail: drink.strDrinkThumb,
-			} as Cocktail;
-		}) as Cocktail[];
-
-		setResults(cocktails);
-		setFilteredResults(cocktails);
-		setSearchedSpirit(searchedSpirit);
-	};
 
 	return (
 		<>
 			<Route exact path="/search">
-				<Search
-					callback={searchCallback}
-					filterResultsCallback={filterResultsCallback}
-				/>
-				<SearchResults
-					results={filteredResults}
-					searchedSpirit={searchedSpirit}
-				/>
+				<Search />
+				<SearchResults />
 			</Route>
 			<Route exact path="/signin" component={SignIn} />
 			<Route exact path="/signup" component={SignUp} />

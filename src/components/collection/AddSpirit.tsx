@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
-import { UserContext } from '../../context/AppContext';
+import { MessageType, UserContext } from '../../context/AppContext';
 import { spiritOptions, tastingNotes } from '../../models/data/data';
 import { addSpirit } from '../../service/collectionService';
 import { validateImage } from '../../utils/validateImage';
@@ -18,7 +18,7 @@ const AddSpirit: React.FC = () => {
 		clearErrors,
 	} = useForm();
 	const history = useHistory();
-	const { error, setGlobalError } = useContext(UserContext);
+	const { message, setGlobalMessage } = useContext(UserContext);
 	const [spirits, setSpirits] = useState(spiritOptions);
 	const [selectedTastingNotes, setSelectedTastingNotes] = useState<
 		Array<string>
@@ -50,9 +50,10 @@ const AddSpirit: React.FC = () => {
 			});
 
 			if (error) {
-				setGlobalError(error.message);
+				setGlobalMessage(error.message, MessageType.error);
 			} else {
 				// TODO: add context for global message
+
 				history.push('/collection');
 			}
 		}
@@ -84,7 +85,9 @@ const AddSpirit: React.FC = () => {
 			<div className="form-container">
 				<form className="form" onSubmit={onSubmit}>
 					<h2>Add Spirit</h2>
-					{error && <div className="error-message">{error}</div>}
+					{message && message.messageType === MessageType.error && (
+						<div className="error-message">{message.text}</div>
+					)}
 					<fieldset>
 						<label htmlFor="name">Type *</label>
 						<select

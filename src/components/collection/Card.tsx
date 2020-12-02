@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import vodkaSvg from '../../assets/vodka.svg';
 import whiskeySvg from '../../assets/whiskey.svg';
-import { UserContext } from '../../context/AppContext';
+import { MessageType, UserContext } from '../../context/AppContext';
 import { Spirit } from '../../models/spirit';
 import { deleteSpirit } from '../../service/collectionService';
 
@@ -11,7 +11,7 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ deleteMode, spirit }) => {
-	const { setGlobalError, setShouldReloadCollection } = useContext(
+	const { setGlobalMessage, setShouldReloadCollection } = useContext(
 		UserContext
 	);
 	const getImageSource = (type: string) => {
@@ -33,7 +33,7 @@ const Card: React.FC<CardProps> = ({ deleteMode, spirit }) => {
 		const error = await deleteSpirit(id!);
 
 		if (error) {
-			setGlobalError(error);
+			setGlobalMessage(error, MessageType.error);
 		} else {
 			setShouldReloadCollection(true);
 		}
