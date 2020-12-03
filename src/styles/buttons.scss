@@ -1,0 +1,50 @@
+@import './variables.scss';
+
+.button.button-outline {
+	color: $textColorDark;
+	background-color: #fff;
+	border-color: $textColorDark;
+}
+
+.button.with-icon {
+	display: flex;
+	align-items: center;
+	margin-bottom: 0;
+	font-size: 1.25rem;
+
+	span {
+		margin-left: 1rem;
+	}
+}
+
+.button.danger-button {
+	background-color: $errorColor;
+	border: 0;
+	color: #fff;
+
+	&.hidden {
+		svg {
+			display: none;
+		}
+
+		span {
+			margin-left: 0;
+		}
+	}
+
+	svg {
+		color: #fff;
+	}
+
+	&:hover {
+		background-color: $darkErrorColor;
+		color: #fff;
+		border: 0;
+	}
+}
+
+.button-primary {
+	&:hover {
+		opacity: 0.9;
+	}
+}

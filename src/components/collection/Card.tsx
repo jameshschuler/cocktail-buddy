@@ -8,10 +8,9 @@ import { deleteSpirit } from '../../service/collectionService';
 
 interface CardProps {
 	spirit: Spirit;
-	deleteMode: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ deleteMode, spirit }) => {
+const Card: React.FC<CardProps> = ({ spirit }) => {
 	const { setGlobalMessage, setShouldReloadCollection } = useContext(
 		UserContext
 	);
@@ -48,11 +47,12 @@ const Card: React.FC<CardProps> = ({ deleteMode, spirit }) => {
 			<header className="card-header">
 				<h2>
 					<span>{spirit.name}</span>
-					{deleteMode && (
-						<span onClick={() => deleteSpiritClicked(spirit.id)}>
-							<i className="fas fa-lg fa-trash-alt"></i>
-						</span>
-					)}
+					<span
+						className="delete-button"
+						onClick={() => deleteSpiritClicked(spirit.id)}
+					>
+						<i className="fas fa-trash-alt"></i>
+					</span>
 				</h2>
 				<p>{spirit.brand}</p>
 			</header>

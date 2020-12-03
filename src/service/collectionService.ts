@@ -65,7 +65,10 @@ export async function deleteSpirit ( id: string ) {
 }
 
 function uploadImage ( img: any ) {
-    if ( !img ) return;
+    if ( !img || !img[ '0' ] ) {
+        return;
+    }
+
     return new Promise( ( resolve, reject ) => {
         const storage = firebase.storage();
         const fileName = `${uuidv4()}_${img[ '0' ].name}`;

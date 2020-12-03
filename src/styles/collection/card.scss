@@ -1,9 +1,11 @@
+@import '../variables.scss';
+
 .card {
 	height: 350px;
 	min-width: 250px;
 	padding: 1.5rem;
 	border-radius: 16px;
-	background: #eee;
+	background: #fff;
 	box-shadow: 0 0 1rem #000;
 	display: flex;
 	border: 2px solid #28242f;
@@ -20,34 +22,25 @@
 		p {
 			font-size: 14px;
 			margin: 0 0 1rem;
-			color: #7a7a8c;
 		}
 
 		h2 {
 			display: flex;
 			font-size: 20px;
+			font-weight: 500;
 			margin: 0.25rem 0 auto;
 			text-decoration: none;
-			color: #28242f;
 			border: 0;
 			cursor: pointer;
 			justify-content: space-between;
 			align-items: center;
 
 			svg {
-				color: #ed4337;
+				color: $errorColor;
 
 				&:hover {
-					color: #b51d12;
+					color: $darkErrorColor;
 				}
-			}
-
-			&:hover {
-				background: linear-gradient(90deg, #ff8a00, #e52e71);
-				text-shadow: none;
-				-webkit-text-fill-color: transparent;
-				-webkit-background-clip: text;
-				background-clip: text;
 			}
 		}
 	}
@@ -92,7 +85,6 @@
 	.section-title {
 		font-style: normal;
 		font-weight: 700;
-		color: #28242f;
 	}
 }
 
@@ -103,8 +95,7 @@
 	margin-top: 1rem;
 
 	.tasting-note-display {
-		background-color: #e0dede;
-		color: #28242f;
+		background-color: #e8e8e8;
 		font-size: 1.25rem;
 		padding: 0.5rem 0.75rem;
 		border-radius: 8px;

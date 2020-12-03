@@ -2,7 +2,6 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	color: #eee;
 	padding: 0 1.5rem 1rem 3rem;
 
 	@media (min-width: 40rem) {
@@ -18,7 +17,7 @@
 	}
 
 	.thumbnail {
-		background-color: #eee;
+		background-color: #fff;
 		padding: 1rem;
 		border-radius: 4px;
 

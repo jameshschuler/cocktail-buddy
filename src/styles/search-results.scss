@@ -1,6 +1,5 @@
 #total-results {
 	font-weight: 500;
-	color: #eee;
 	font-size: 3rem;
 	width: 85%;
 	margin: 0 auto;
@@ -13,7 +12,6 @@
 
 #search-results-container {
 	align-items: center;
-	color: #eee;
 	display: grid;
 	grid-gap: 1.5rem 1.5rem;
 	grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
@@ -38,18 +36,16 @@
 
 	.result {
 		align-items: center;
-		background-color: #eee;
+		background-color: #fff;
 		display: flex;
-		color: #333;
 		flex-direction: column;
 		justify-content: center;
-		border: 1px solid #333;
 		border-radius: 4px;
 		padding: 2rem 1.5rem 1rem 1.5rem;
 
 		&:hover {
 			cursor: pointer;
-			box-shadow: 5px 5px 10px #333;
+			box-shadow: 3px 3px 4px #d6d4d4;
 		}
 
 		a {

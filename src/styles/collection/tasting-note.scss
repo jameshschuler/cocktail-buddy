@@ -4,13 +4,19 @@
 	flex-wrap: wrap;
 
 	.tasting-note {
-		background-color: #e0dede;
+		background-color: #e8e8e8;
 		padding: 0.5rem 0.75rem;
 		border-radius: 8px;
 		margin: 0.25rem;
 
 		&.selected {
-			background-color: #ccc;
+			background-color: rgb(86, 176, 211);
+			color: #fff;
+		}
+
+		&:hover {
+			cursor: pointer;
+			opacity: 0.8;
 		}
 	}
 }

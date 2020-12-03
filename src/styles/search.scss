@@ -1,0 +1,42 @@
+#search {
+	background-color: #fff;
+	padding: 2rem 0.75rem;
+	margin: 0 2rem 3rem 2rem;
+	border-radius: 4px;
+	max-width: 800px;
+
+	@media screen and (min-width: 35.5em) {
+		margin: 3rem auto;
+	}
+
+	form,
+	fieldset,
+	select {
+		margin: 0;
+	}
+
+	form {
+		display: flex;
+
+		fieldset {
+			margin: 0 0.75rem;
+			width: 50%;
+
+			select {
+				&:focus {
+					border-color: #333;
+					background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 8" width="30"><path fill="%333" d="M0,0l6,8l6-8"/></svg>');
+				}
+			}
+		}
+
+		@media screen and (max-width: 35.5em) {
+			flex-direction: column;
+
+			fieldset {
+				margin: 0.5rem 0;
+				width: 100%;
+			}
+		}
+	}
+}

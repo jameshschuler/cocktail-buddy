@@ -2,6 +2,7 @@
 @import './content.scss';
 @import './footer.scss';
 @import './variables.scss';
+@import './buttons.scss';
 
 html,
 body {
@@ -11,6 +12,7 @@ body {
 	margin: 0;
 	padding: 0;
 	color: $textColorDark;
+	background-color: #e8e8e8;
 }
 
 .loader {
@@ -25,7 +27,6 @@ body {
 }
 
 #root {
-	background-color: rgb(86, 176, 211);
 	min-height: 100%;
 	display: flex;
 	flex-direction: column;
@@ -33,6 +34,7 @@ body {
 
 	#content {
 		flex-grow: 1;
+		margin-top: 20px;
 	}
 
 	#header,
@@ -63,10 +65,10 @@ body {
 			}
 
 			a {
-				color: #eee;
+				color: $textColorDark;
 
 				&:hover {
-					color: $textColorDark;
+					color: rgb(86, 176, 211);
 				}
 			}
 		}

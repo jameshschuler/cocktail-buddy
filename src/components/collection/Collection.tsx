@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../../context/AppContext';
 import { Spirit, SpiritType, ToArray } from '../../models/spirit';
 import { loadCollection } from '../../service/collectionService';
+import Loader from '../helpers/Loader';
 import Cards from './Cards';
 
 const Collection: React.FC = () => {
@@ -11,7 +12,6 @@ const Collection: React.FC = () => {
 		Spirit[]
 	> | null>(new Map<string, Spirit[]>());
 	const [loading, setLoading] = useState(true);
-	const [deleteMode, setDeleteMode] = useState(false);
 	const { shouldReloadCollection, setShouldReloadCollection } = useContext(
 		UserContext
 	);
@@ -32,10 +32,6 @@ const Collection: React.FC = () => {
 		setLoading(false);
 	};
 
-	const toggleDeleteMode = () => {
-		setDeleteMode(deleteMode ? false : true);
-	};
-
 	useEffect(() => {
 		loadData();
 	}, []);
@@ -49,21 +45,10 @@ const Collection: React.FC = () => {
 		<div id="my-collection">
 			<div className="header">
 				<h2>My Collection</h2>
-				<div className="actions">
-					<button
-						className={`button button-outline ${
-							deleteMode ? 'hidden' : ''
-						}`}
-						onClick={() => toggleDeleteMode()}
-					>
-						<i className="fas fa-lg fa-trash-alt"></i>
-						<span>{deleteMode ? 'Done' : 'Delete'}</span>
-					</button>
-				</div>
 			</div>
 			<div className="collection-items">
 				{loading ? (
-					<div>Loading...</div>
+					<Loader />
 				) : (
 					<>
 						{collectionMap === null || collectionMap?.size === 0 ? (
@@ -86,10 +71,7 @@ const Collection: React.FC = () => {
 										<h3 className="spirit-type">
 											{spiritType}
 										</h3>
-										<Cards
-											deleteMode={deleteMode}
-											spirits={spirits}
-										/>
+										<Cards spirits={spirits} />
 									</div>
 								);
 							})
