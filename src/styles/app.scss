@@ -1,6 +1,7 @@
 @import './navbar.scss';
 @import './content.scss';
 @import './footer.scss';
+@import './variables.scss';
 
 html,
 body {
@@ -9,6 +10,7 @@ body {
 	font-family: 'Raleway', sans-serif;
 	margin: 0;
 	padding: 0;
+	color: $textColorDark;
 }
 
 .loader {
@@ -51,20 +53,20 @@ body {
 		font-weight: 500;
 
 		li {
-			color: #606c76;
+			color: $textColorDark;
 			margin-bottom: 0;
 
 			&.divider {
 				font-size: 1.25rem;
 				margin: 0 1rem;
-				color: #606c76;
+				color: $textColorDark;
 			}
 
 			a {
 				color: #eee;
 
 				&:hover {
-					color: #606c76;
+					color: $textColorDark;
 				}
 			}
 		}

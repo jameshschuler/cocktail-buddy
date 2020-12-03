@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
-import { MessageType, UserContext } from '../../context/AppContext';
+import { UserContext } from '../../context/AppContext';
 import { spiritOptions, tastingNotes } from '../../models/data/data';
+import { MessageType } from '../../models/message';
 import { addSpirit } from '../../service/collectionService';
 import { validateImage } from '../../utils/validateImage';
 import TastingNote from './TastingNote';
@@ -53,7 +54,10 @@ const AddSpirit: React.FC = () => {
 				setGlobalMessage(error.message, MessageType.error);
 			} else {
 				// TODO: add context for global message
-
+				setGlobalMessage(
+					`${name} was added to your collection.`,
+					MessageType.success
+				);
 				history.push('/collection');
 			}
 		}

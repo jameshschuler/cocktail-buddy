@@ -9,7 +9,9 @@ const Navbar: React.FC = () => {
 	return (
 		<nav>
 			<header id="header">
-				<h1>Cocktail Buddy</h1>
+				<h1>
+					<NavLink to="/search">Cocktail Buddy</NavLink>
+				</h1>
 			</header>
 			<ul>
 				<li>

@@ -1,15 +1,6 @@
 import React, { createContext, useReducer } from 'react';
 import { Cocktail } from '../models/api/cocktail';
-
-export enum MessageType {
-	error,
-	success,
-}
-
-export type Message = {
-	text: string;
-	messageType: MessageType;
-};
+import { Message, MessageType } from '../models/message';
 
 type AppState = {
 	error?: string;
@@ -43,7 +34,11 @@ const initialState: AppState = {
 	query: '',
 	filterResults: (query: string) => {},
 	setUser: () => {},
-	setGlobalMessage: (message: string, messageType: MessageType) => {},
+	setGlobalMessage: (
+		message: string,
+		messageType: MessageType,
+		duration: number = 3000
+	) => {},
 	setSearchResults: (searchResults: Cocktail[]) => {},
 	setShouldReloadCollection: (shouldReloadCollection: boolean) => {},
 };
@@ -87,6 +82,7 @@ const Provider: React.FC = ({ children }) => {
 	const value = {
 		filteredResults: state.filteredResults,
 		loading: state.loading,
+		message: state.message,
 		shouldReloadCollection: state.shouldReloadCollection,
 		searchResults: state.searchResults,
 		query: state.query,
@@ -127,11 +123,22 @@ const Provider: React.FC = ({ children }) => {
 		setUser: (user: firebase.User) => {
 			dispatch({ type: Actions.SET_USER, payload: { user } });
 		},
-		setGlobalMessage: (text: string, messageType: MessageType) => {
+		setGlobalMessage: (
+			text: string,
+			messageType: MessageType,
+			duration: number = 3000
+		) => {
 			dispatch({
 				type: Actions.SET_MESSAGE,
 				payload: { message: { text, messageType } },
 			});
+
+			setTimeout(() => {
+				dispatch({
+					type: Actions.SET_MESSAGE,
+					payload: { message: undefined },
+				});
+			}, duration);
 		},
 	};
 

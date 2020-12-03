@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Route } from 'react-router-dom';
 import { UserContext } from '../context/AppContext';
+import { MessageType } from '../models/message';
 import AddSpirit from './collection/AddSpirit';
 import Collection from './collection/Collection';
 import ProtectedRoute from './helpers/ProtectedRoute';
@@ -12,7 +13,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 
 const Content: React.FC = () => {
-	const { user } = useContext(UserContext);
+	const { user, message } = useContext(UserContext);
 
 	return (
 		<>
@@ -49,6 +50,16 @@ const Content: React.FC = () => {
 				path="/detail/:cocktailId"
 				component={CocktailDetail}
 			></Route>
+			<div
+				id="toast-container"
+				className={`${
+					message?.messageType === MessageType.success
+						? 'success'
+						: 'error'
+				} ${message ? 'show' : ''}`}
+			>
+				{message?.text}
+			</div>
 		</>
 	);
 };

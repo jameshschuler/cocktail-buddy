@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import vodkaSvg from '../../assets/vodka.svg';
 import whiskeySvg from '../../assets/whiskey.svg';
-import { MessageType, UserContext } from '../../context/AppContext';
+import { UserContext } from '../../context/AppContext';
+import { MessageType } from '../../models/message';
 import { Spirit } from '../../models/spirit';
 import { deleteSpirit } from '../../service/collectionService';
 
