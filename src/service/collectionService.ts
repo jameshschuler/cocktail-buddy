@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { v4 as uuidv4 } from 'uuid';
 import { auth, firestore } from '../App';
 import { CustomError } from '../models/error';
 import { Spirit } from '../models/spirit';
@@ -67,7 +68,7 @@ function uploadImage ( img: any ) {
     if ( !img ) return;
     return new Promise( ( resolve, reject ) => {
         const storage = firebase.storage();
-        const fileName = img[ '0' ].name;
+        const fileName = `${uuidv4()}_${img[ '0' ].name}`;
         const uploadTask = storage.ref( `/images/${fileName}` ).put( img[ '0' ] );
 
         uploadTask.on( 'state_changed',
