@@ -1,48 +1,40 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { signin } from '../service/accountService';
+import { useStoreState } from '../store/storeModel';
 
 const SignIn: React.FC = () => {
-	const { register, handleSubmit, watch, errors } = useForm();
-	const { state }: any = useLocation();
-	const [shouldRedirect, setShouldRedirect] = useState(false);
+	const { register, handleSubmit, errors } = useForm();
 	const history = useHistory();
+	const user = useStoreState((state) => state.user);
+	const [serviceError, setServiceError] = useState<string>('');
 
 	const onSubmit = async (data: any) => {
 		const error = await signin(data.email, data.password, data.rememberMe);
 
 		if (error) {
-			//errorContext.message = error;
+			setServiceError(error);
 		} else {
-			// console.log('here', userContext);
-			// if (userContext.user) {
-			// 	errorContext.message = null;
-			// 	setShouldRedirect(true);
-			// 	history.push('/collection');
-			// }
+			history.push('/collection');
 		}
 	};
 
-	// if (userContext.user !== null) {
-	// 	return <Redirect to={'/collection'} />;
-	// }
-
-	if (shouldRedirect) {
-		return <Redirect to={state?.from || '/collection'} />;
+	if (user) {
+		return <Redirect to={'/collection'} />;
 	}
 
 	return (
 		<div className="form-container">
 			<form
-				className="form"
+				className="form form-sm"
 				id="sign-in-form"
 				onSubmit={handleSubmit(onSubmit)}
 			>
 				<h2>Sign in</h2>
-				{/* {errorContext.message && (
-					<div className="error-message">{errorContext.message}</div>
-				)} */}
+				{serviceError !== '' && (
+					<div className="error-message">{serviceError}</div>
+				)}
 				<fieldset>
 					<label htmlFor="email">Email</label>
 					<input

@@ -1,19 +1,21 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import vodkaSvg from '../../assets/vodka.svg';
 import whiskeySvg from '../../assets/whiskey.svg';
-import { UserContext } from '../../context/AppContext';
 import { MessageType } from '../../models/message';
 import { Spirit } from '../../models/spirit';
 import { deleteSpirit } from '../../service/collectionService';
+import { useStoreActions } from '../../store/storeModel';
 
 interface CardProps {
 	spirit: Spirit;
 }
 
 const Card: React.FC<CardProps> = ({ spirit }) => {
-	const { setGlobalMessage, setShouldReloadCollection } = useContext(
-		UserContext
+	const setMessage = useStoreActions((actions) => actions.setMessage);
+	const setShouldReloadCollection = useStoreActions(
+		(actions) => actions.setShouldReloadCollection
 	);
+
 	const getImageSource = (type: string) => {
 		if (spirit.imageUrl && spirit.imageUrl !== '') {
 			return spirit.imageUrl;
@@ -33,7 +35,7 @@ const Card: React.FC<CardProps> = ({ spirit }) => {
 		const error = await deleteSpirit(id!);
 
 		if (error) {
-			setGlobalMessage(error, MessageType.error);
+			setMessage({ text: error.message, messageType: MessageType.error });
 		} else {
 			setShouldReloadCollection(true);
 		}

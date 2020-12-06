@@ -35,12 +35,24 @@ body {
 	#content {
 		flex-grow: 1;
 		margin-top: 20px;
+		width: 100%;
+
+		@media (min-width: 40rem) {
+			max-width: 1200px;
+			margin: 20px auto 0 auto;
+		}
 	}
 
 	#header,
 	#content,
 	#footer {
 		flex-shrink: 0;
+	}
+}
+
+.hoverable {
+	&:hover {
+		cursor: pointer;
 	}
 }
 

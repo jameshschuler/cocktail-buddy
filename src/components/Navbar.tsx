@@ -1,10 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { auth } from '../App';
-import { UserContext } from '../context/AppContext';
+import { useStoreState } from '../store/storeModel';
 
-const Navbar: React.FC = () => {
-	const { user } = useContext(UserContext);
+interface NavbarProps {
+	loading: boolean;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ loading }) => {
+	const user = useStoreState((state) => state.user);
 
 	return (
 		<nav>
@@ -20,7 +24,7 @@ const Navbar: React.FC = () => {
 						<span>Search</span>
 					</NavLink>
 				</li>
-				{user !== null && (
+				{!loading && user !== null && (
 					<>
 						<li>
 							<NavLink to="/collection">
@@ -38,6 +42,7 @@ const Navbar: React.FC = () => {
 							onClick={async () => {
 								await auth.signOut();
 							}}
+							className="hoverable"
 						>
 							<a>
 								<i className="fas fa-fw fa-sign-out-alt"></i>
@@ -46,7 +51,7 @@ const Navbar: React.FC = () => {
 						</li>
 					</>
 				)}
-				{user === null && (
+				{!loading && user === null && (
 					<>
 						<li>
 							<NavLink to="/signin">

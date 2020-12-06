@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
-import { UserContext } from '../context/AppContext';
-import { MessageType } from '../models/message';
+import { useStoreState } from '../store/storeModel';
 import AddSpirit from './collection/AddSpirit';
 import Collection from './collection/Collection';
 import ProtectedRoute from './helpers/ProtectedRoute';
@@ -11,9 +10,11 @@ import Search from './search/Search';
 import SearchResults from './search/SearchResults';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import ToastContainer from './ToastContainer';
 
 const Content: React.FC = () => {
-	const { user, message } = useContext(UserContext);
+	const message = useStoreState((state) => state.message);
+	const user = useStoreState((state) => state.user);
 
 	return (
 		<>
@@ -50,16 +51,7 @@ const Content: React.FC = () => {
 				path="/detail/:cocktailId"
 				component={CocktailDetail}
 			></Route>
-			<div
-				id="toast-container"
-				className={`${
-					message?.messageType === MessageType.success
-						? 'success'
-						: 'error'
-				} ${message ? 'show' : ''}`}
-			>
-				{message?.text}
-			</div>
+			<ToastContainer message={message} />
 		</>
 	);
 };

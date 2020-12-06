@@ -1,13 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../../context/AppContext';
 import { Cocktail } from '../../models/api/cocktail';
+import { useStoreState } from '../../store/storeModel';
 
 interface SearchResultsProps {}
 
 const SearchResults: React.FC<SearchResultsProps> = () => {
-	const { filteredResults, searchResults, query } = useContext(UserContext);
 	const [results, setResults] = useState<Cocktail[]>([]);
+	const filteredResults = useStoreState((state) => state.filteredResults);
+	const searchResults = useStoreState((state) => state.searchResults);
+	const query = useStoreState((state) => state.query);
 
 	useEffect(() => {
 		if (filteredResults.length !== 0 || query !== '') {

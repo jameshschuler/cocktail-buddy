@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../../context/AppContext';
 import { Spirit, SpiritType, ToArray } from '../../models/spirit';
 import { loadCollection } from '../../service/collectionService';
+import { useStoreActions, useStoreState } from '../../store/storeModel';
 import Loader from '../helpers/Loader';
 import Cards from './Cards';
 
@@ -12,8 +12,11 @@ const Collection: React.FC = () => {
 		Spirit[]
 	> | null>(new Map<string, Spirit[]>());
 	const [loading, setLoading] = useState(true);
-	const { shouldReloadCollection, setShouldReloadCollection } = useContext(
-		UserContext
+	const shouldReloadCollection = useStoreState(
+		(state) => state.shouldReloadCollection
+	);
+	const setShouldReloadCollection = useStoreActions(
+		(actions) => actions.setShouldReloadCollection
 	);
 
 	const loadData = async () => {

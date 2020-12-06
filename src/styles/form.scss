@@ -38,7 +38,6 @@ blockquote.error {
 .form-container {
 	margin: 0 auto;
 	width: 100%;
-	max-width: 500px;
 	padding: 2rem;
 
 	button,
@@ -52,8 +51,29 @@ blockquote.error {
 		padding: 1.5rem;
 		border-radius: 4px;
 
+		&.form-sm {
+			max-width: 500px;
+			margin: 0 auto;
+
+			fieldset {
+				display: block;
+			}
+		}
+
 		fieldset {
 			margin-bottom: 0;
+			display: flex;
+			flex-direction: column;
+
+			@media (min-width: 40rem) {
+				flex-direction: row;
+
+				.left,
+				.right {
+					width: 50%;
+					padding: 0 1.5rem;
+				}
+			}
 		}
 
 		button {
@@ -62,13 +82,16 @@ blockquote.error {
 			align-items: center;
 			justify-content: center;
 			margin-bottom: 0;
+			margin-top: 2rem;
 		}
 	}
 
 	.secondary {
-		background-color: #eee;
+		background-color: #fff;
 		padding: 1.5rem;
 		border-radius: 4px;
+		max-width: 500px;
+		margin: 2rem auto 0 auto;
 
 		p {
 			margin-bottom: 1rem;

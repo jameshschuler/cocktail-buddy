@@ -1,12 +1,12 @@
 import firebase from 'firebase';
 import 'milligram';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Content from './components/Content';
 import Footer from './components/Footer';
 import Loader from './components/helpers/Loader';
 import Navbar from './components/Navbar';
-import Provider, { UserContext } from './context/AppContext';
+import { useStoreActions } from './store/storeModel';
 import './styles/app.scss';
 
 firebase.initializeApp({
@@ -25,22 +25,20 @@ export const firestore = firebase.firestore();
 
 function App() {
 	const [loading, setLoading] = useState(true);
-	const { user, setUser } = useContext(UserContext);
+	const setUser = useStoreActions((actions) => actions.setUser);
 
 	useEffect(() => {
 		auth.onAuthStateChanged((userAuth) => {
 			setUser(userAuth);
 			setLoading(false);
 		});
-	}, [user]);
+	}, []);
 
 	return (
 		<Router>
-			<Provider>
-				<Navbar />
-				<div id="content">{loading ? <Loader /> : <Content />}</div>
-				<Footer />
-			</Provider>
+			<Navbar loading={loading} />
+			<div id="content">{loading ? <Loader /> : <Content />}</div>
+			<Footer />
 		</Router>
 	);
 }
